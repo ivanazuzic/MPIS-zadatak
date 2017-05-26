@@ -1,5 +1,5 @@
 class prekidac{
-	constructor(ime, komanda, stanje, gubitakSF6_upoz, ubitakN2_blok, mintlak_blok, gubitakSF6_blok, gubitakulja_blok, APU_blok, kvar_grijanja)
+	constructor(ime, komanda, stanje, gubitakSF6_upoz, gubitakN2_blok, mintlak_blok, gubitakSF6_blok, gubitakulja_blok, APU_blok, kvar_grijanja){
 	this.ime = ime;
 	this.komanda = komanda;
 	this.stanje = stanje;
@@ -10,11 +10,13 @@ class prekidac{
 	this.gubitakulja_blok = gubitakulja_blok;
 	this.APU_blok = APU_blok;
 	this.kvar_grijanja = kvar_grijanja;
-    
+	}
 }
 
+p1 = new prekidac("P1", "uklop", 1, 2, 3, 4, 5, 6, 7, 8);
+
 document.getElementById("test").innerHTML = 
-"Stanje prekidaca " + prekidac.stanje + ", u položaju " + prekidac.komanda;
+"Stanje prekidaca " + p1.stanje + ", u položaju " + p1.komanda;
 
 
 class APU{

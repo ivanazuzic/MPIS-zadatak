@@ -3,6 +3,15 @@
 <head>
 	<title>MPIS</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="elementipostrojenja.css">
+	<script>
+	function myFunction() {
+		window.open("https://www.w3schools.com");
+	}
+	</script>
+	<style>
+	
+	</style>
 </head>
 
 <body>
@@ -20,14 +29,39 @@
 			<a href="javascript:void(0)" class="dropbtn">Spojno polje</a>
 			<div class="dropdown-content">
 				<a href="#">Svi signali</a>
-				<a href="#">Trenutni signali</a>
+				<a href="#" onclick="myFunction()">Trenutni signali</a>
 			</div>
 		</li>
 	</ul>
 	<!--Ovo su primjeri kako se koriste klase i funkcije.-->
 	<p id="demo"></p>
 	<p id="demo2"></p>
-	<script src="primjerizaklase.js"></script>
+	<p id="test"></p>
+	<script src="klase.js"></script>
+	<div id="prostorzasliku">
+		<div id="sabirnica_naslov1">S1</div>
+		<div id="sabirnnica_naslov2">S2</div>
+		<img id="psab1" src="Slike/prekidac_ukljucen.png" onclick="p1.promijeni_stanje()"/>
+		<img id="rsab1" src="Slike/rastavljac_ukljucen.png" onclick="r1.promijeni_stanje()"/>
+		<img id="rsab2" src="Slike/rastavljac_ukljucen.png" onclick="r2.promijeni_stanje()"/>
+		<img id="rsab3" src="Slike/rastavljac_ukljucen.png" onclick="r3.promijeni_stanje()"/>
+		<svg width="500" height="500">
+			<line x1="40" y1="215" x2="500" y2="215" stroke="black"/>
+			<line x1="40" y1="175" x2="500" y2="175" stroke="black"/>
+			<line x1="110" y1="215" x2="110" y2="300" stroke="black"/>
+			<line x1="180" y1="215" x2="180" y2="300" stroke="black"/>
+			<line x1="110" y1="300" x2="180" y2="300" stroke="black"/>
+			<line x1="145" y1="300" x2="145" y2="430" stroke="black"/>
+		</svg>
+	</div>
+	<!--<canvas>
+	
+	</canvas>
+	<div id="slika">
+		<div id="div1" style="width: 100px; height: 100px; top:0; left:0; background:#777; position:absolute;"></div>
+		<div id="div2" style="width: 100px; height: 100px; top:300px; left:300px; background:#333; position:absolute;"></div>
+		<svg width="500" height="500"><line x1="50" y1="50" x2="350" y2="350" stroke="black"/></svg>
+	</div>-->
 </body>
 
 </html>

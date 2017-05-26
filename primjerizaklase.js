@@ -1,3 +1,35 @@
+class prekidac{
+	constructor(ime, komanda){
+		this.ime = ime;
+		this.komanda = komanda;
+	}
+}
+p1 = new prekidac("prek1", "uklop")
+document.getElementById("test").innerHTML = 
+"Stanje prekidaca " + p1.ime + ", u položaju " + p1.komanda;
+
+/*
+class Animal { 
+  constructor(name) {
+    this.name = name;
+  }
+  
+  speak() {
+    console.log(this.name + ' makes a noise.');
+  }
+}
+
+class Dog extends Animal {
+  speak() {
+    console.log(this.name + ' barks.');
+  }
+}
+
+var d = new Dog('Mitzie');
+d.speak(); // Mitzie barks.
+
+document.getElementById("test").innerHTML = d.name ;
+
 class Rectangle {
   constructor(height, width) {
     this.height = height;
@@ -11,7 +43,7 @@ class Rectangle {
   calcArea() {
     return this.height * this.width;
   }
-}
+}*/
 
 const square = new Rectangle(10, 10);
 

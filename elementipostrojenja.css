@@ -1,0 +1,38 @@
+#prostorzasliku {
+	height: 500px;
+	width: 500px;
+}	
+#sabirnica_naslov1 {
+	position: relative;
+	top: 250px;
+	left: 20px;
+}
+#sabirnnica_naslov2 {
+	position: relative;
+	top: 275px;
+	left: 20px;
+}
+#psab1 {
+	float: left;
+	position: relative;
+	top: 350px;
+	left: 120px;
+}
+#rsab1 {
+	float: left;
+	position: relative;
+	top: 300;
+	left: 40px;
+}
+#rsab2 {
+	float: left;
+	position: relative;
+	top: 300px;
+	left: 60px;
+}
+#rsab3 {
+	float: left;
+	position: relative;
+	top: 410px;
+	left: -30px;
+}
