@@ -95,7 +95,7 @@ class prekidac{
 	}
 	
 	promijeni_stanje(){
-		console.log("kliknut sam")
+		console.log("kliknut sam");
 		if (this.stanje == "uklop") {
 			this.stanje = "isklop";
 			document.getElementById(this.slika).src = "Slike/prekidac_iskljucen.png";
@@ -103,6 +103,15 @@ class prekidac{
 			this.stanje = "uklop";
 			document.getElementById(this.slika).src = "Slike/prekidac_ukljucen.png";
 		}
+	}
+	
+	to_string(){
+		return "Ime: " + this.ime + "<br>Komanda: " + this.komanda + "<br>Stanje: " + this.stanje + "<br>GubitakSF6 upozorenje: " + this.gubitakSF6_upoz + "<br>Gubitak N2 blokada: " + this.gubitakN2_blok + "<br>Minimalni tlak blokada: " + this.mintlak_blok + "<br>Gubitak SF6 blokada: " + this.gubitakSF6_blok + "<br>Gubitak ulja blokada: " + this.gubitakulja_blok + "<br>APU blokada: " + this.APU_blok + "<br>Kvar grijanja: " + this.kvar_grijanja + "<br>";
+	}
+	
+	prikazi_stanje(){
+		console.log("double-kliknut sam");
+		document.getElementById("elem_stat").innerHTML = this.to_string();
 	}
 	
 }
