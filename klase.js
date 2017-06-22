@@ -205,26 +205,32 @@ class prekidac{
 	}
 	
 	smije_se_gasiti(){
+        return 1;
 	}
 	
 	smije_se_paliti(){
+        return 1;
 	}
 	
 	promijeni_stanje(){
 		console.log("kliknut sam");
 		if (this.stanje == "uklop") {
-			if (smije_se_gasiti()){
+			if (this.smije_se_gasiti()){
 				this.stanje = "isklop";
 				document.getElementById(this.slika).src = "Slike/prekidac_iskljucen.png";
 			} else {
-				
+				console.log("smeć");
+                document.getElementById("error_log").innerHTML = "Nije moguće ugasiti prekidač.<br>";
+                document.getElementById("error_log").style.visibility = "visible";
 			}
 		} else {
-			if (smije_se_paliti()){
+			if (this.smije_se_paliti()){
 				this.stanje = "uklop";
 				document.getElementById(this.slika).src = "Slike/prekidac_ukljucen.png";
 			} else {
-				
+				console.log("antismeć");
+                document.getElementById("error_log").innerHTML = "Nije moguće upaliti prekidač.<br>";
+                document.getElementById("error_log").style.visibility = "visible";
 			}
 		}
 	}
