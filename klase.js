@@ -32,14 +32,14 @@ class spojno_polje extends polje{
 
 class mjerni_pretvornik{
 	constructor(r_snaga, napon) {
-		radna_snaga(MW) = r_snaga;
-		napon(kV) = napon; 
+		radna_snaga = r_snaga;
+		napon = napon; 
 	}
 }
 
 class brojilo{
 	constructor(r_energija, alarm) {
-		this.radna_energija(kWh) = r_energija;
+		this.radna_energija = r_energija;
 		this.alarm = alarm;
 		this.varijable = {alarm: ["prorada", "prestanak"]};
 	}
@@ -164,7 +164,7 @@ class distantna_zastita extends zastita{
 		this.tkprijem = tkprijem;
 		this.tkslanje = tkslanje;
 		this.osjetljiva_zs = osjetljiva_zs;
-		this.varijable = {isključenje: ["prorada", "prestanak"], faza_L1_poticaj: ["prorada", "prestanak"], faza_L2_poticaj: ["prorada", "prestanak"], faza_L3_poticaj: ["prorada", "prestanak"], zemljospoj_poticaj: ["prorada", "prestanak"], _2.stupanj_poticaj: ["prorada", "prestanak"], _3.stupanj_poticaj: ["prorada", "prestanak"], TK_prijem_signala: ["prorada", "prestanak"], osjetljiva_zemljospojna: ["prorada", "prestanak"]};
+		this.varijable = {isključenje: ["prorada", "prestanak"], faza_L1_poticaj: ["prorada", "prestanak"], faza_L2_poticaj: ["prorada", "prestanak"], faza_L3_poticaj: ["prorada", "prestanak"], zemljospoj_poticaj: ["prorada", "prestanak"], _2_stupanj_poticaj: ["prorada", "prestanak"], _3_stupanj_poticaj: ["prorada", "prestanak"], TK_prijem_signala: ["prorada", "prestanak"], osjetljiva_zemljospojna: ["prorada", "prestanak"]};
 	}
 }
 
@@ -184,7 +184,7 @@ class zastita_zatajenje extends zastita{
 		this.rastavljac_kvar = rastavljac_kvar;
 		this.pomocnonap_off = pomocnonap_off;
 		this.test = test;
-		this.varijable = {_1.stupanj-isključenje: ["prorada", "prestanak"], _2.stupanj-isključenje: ["prorada", "prestanak"], rastavljač-kvar: ["prorada", "prestanak"], pomoćno_napajanje-nestanak: ["prorada", "prestanak"], u_testu: ["prorada", "prestanak"]};
+		this.varijable = {_1_stupanj_isključenje: ["prorada", "prestanak"], _2_stupanj_isključenje: ["prorada", "prestanak"], rastavljač_kvar: ["prorada", "prestanak"], pomoćno_napajanje_nestanak: ["prorada", "prestanak"], u_testu: ["prorada", "prestanak"]};
 	}
 }
 
