@@ -254,33 +254,13 @@ class prekidac{
 	}	
 }
 
-
-p1 = new prekidac("P1", "uklop", 1, 2, 3, 4, 5, 6, 7, 8, "pdal1");
+//constructor(ime, komanda, stanje, gubitakSF6_upoz, gubitakN2_blok, mintlak_blok, gubitakSF6_blok, gubitakulja_blok, APU_blok, kvar_grijanja, slika)
+p1 = new prekidac("P1", "uklop", "ukljucen", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "pdal1");
 r1 = new rastavljac("R1", "uklop", "rdal1");
 r2 = new rastavljac("R2", "uklop", "rdal2");
 r3 = new rastavljac("R3", "uklop", "rdal3");
 
-p2 = new prekidac("P2", "uklop", 1, 2, 3, 4, 5, 6, 7, 8, "psp1");
+p2 = new prekidac("P2", "uklop", "ukljucen", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "psp1");
 r4 = new rastavljac("R4", "uklop", "rsp1");
 r5 = new rastavljac("R5", "uklop", "rsp2");
 //document.getElementById("test").innerHTML = "Stanje prekidaca " + p1.stanje + ", u položaju " + p1.komanda;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
