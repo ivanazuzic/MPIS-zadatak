@@ -30,12 +30,28 @@ class spojno_polje extends polje{
 	}
 }
 
+class mjerni_pretvornik{
+	constructor(r_snaga, napon) {
+		radna_snaga(MW) = r_snaga;
+		napon(kV) = napon; 
+	}
+}
+
+class brojilo{
+	constructor(r_energija, alarm) {
+		this.radna_energija(kWh) = r_energija;
+		this.alarm = alarm;
+		this.varijable = {alarm: ["prorada", "prestanak"]};
+	}
+}
+
 class APU{
 	constructor(ime, onep, threep, blokada){
 		this.ime = ime;
 		this.onep = onep;
 		this.threep = threep;
 		this.blokada = blokada;
+		this.varijable = {_1p: ["prorada", "prestanak"], _2p: ["prorada", "prestanak"], blokada: ["prorada", "prestanak"]};
 	}
 }
 
@@ -136,7 +152,8 @@ class zastita{
 }
 
 class distantna_zastita extends zastita{
-	constructor(){
+	constructor(ime, isklj, lone_pot, ltwo_pot, lthree_pot, zemljospoj_pot, stagetwo_pot, stagethree_pot, tkprijem, tkslanje, osjetljiva_zs){
+		this.ime = ime;
 		this.isklj = isklj;
 		this.lone_pot = lone_pot;
 		this.ltwo_pot = ltwo_pot;
@@ -147,22 +164,27 @@ class distantna_zastita extends zastita{
 		this.tkprijem = tkprijem;
 		this.tkslanje = tkslanje;
 		this.osjetljiva_zs = osjetljiva_zs;
+		this.varijable = {isključenje: ["prorada", "prestanak"], faza_L1_poticaj: ["prorada", "prestanak"], faza_L2_poticaj: ["prorada", "prestanak"], faza_L3_poticaj: ["prorada", "prestanak"], zemljospoj_poticaj: ["prorada", "prestanak"], _2.stupanj_poticaj: ["prorada", "prestanak"], _3.stupanj_poticaj: ["prorada", "prestanak"], TK_prijem_signala: ["prorada", "prestanak"], osjetljiva_zemljospojna: ["prorada", "prestanak"]};
 	}
 }
 
 class nadstrujna_zastita extends zastita{
-	constructor(isklj){
+	constructor(ime, isklj){
+		this.ime = ime;
 		this.isklj = isklj;
+		this.varijable = {isključenje: ["prorada", "prestanak"]};
 	}
 }
 
 class zastita_zatajenje extends zastita{
-	constructor(prvistup_isklj, drugistup_isklj, rastavljac_kvar, pomocnonap_off, test){
+	constructor(ime, prvistup_isklj, drugistup_isklj, rastavljac_kvar, pomocnonap_off, test){
+		this.ime = ime;
 		this.prvistup_isklj = prvistup_isklj;
 		this.drugistup_isklj = drugistup_isklj;
 		this.rastavljac_kvar = rastavljac_kvar;
 		this.pomocnonap_off = pomocnonap_off;
 		this.test = test;
+		this.varijable = {_1.stupanj-isključenje: ["prorada", "prestanak"], _2.stupanj-isključenje: ["prorada", "prestanak"], rastavljač-kvar: ["prorada", "prestanak"], pomoćno_napajanje-nestanak: ["prorada", "prestanak"], u_testu: ["prorada", "prestanak"]};
 	}
 }
 
