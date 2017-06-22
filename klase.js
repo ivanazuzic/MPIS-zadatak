@@ -1,4 +1,4 @@
-class element{
+class elementpostrojenja {
 
 	constructor() {
 		
@@ -12,23 +12,6 @@ class element{
 	
 }
 
-class polje {
-	constructor() {
-		this.stanje = "ukljuceno";
-	}
-}
-
-class dalekovodno_polje extends polje{
-	constructor() {
-		
-	}
-}
-
-class spojno_polje extends polje{
-	constructor() {
-		
-	}
-}
 
 class mjerni_pretvornik{
 	constructor(r_snaga, napon) {
@@ -55,7 +38,7 @@ class APU{
 	}
 }
 
-class rastavljac{
+class rastavljac extends elementpostrojenja {
 	constructor(ime, stanje, slika){
 		this.ime = ime;
 		this.stanje = stanje;
@@ -188,7 +171,7 @@ class zastita_zatajenje extends zastita{
 	}
 }
 
-class prekidac{
+class prekidac extends elementpostrojenja {
 	constructor(ime, komanda, stanje, gubitakSF6_upoz, gubitakN2_blok, mintlak_blok, gubitakSF6_blok, gubitakulja_blok, APU_blok, kvar_grijanja, slika){
 		this.ime = ime;
 		this.komanda = komanda;
@@ -306,13 +289,35 @@ class prekidac_sp extends prekidac{
 	}
 }
 
-//constructor(ime, komanda, stanje, gubitakSF6_upoz, gubitakN2_blok, mintlak_blok, gubitakSF6_blok, gubitakulja_blok, APU_blok, kvar_grijanja, slika)
-p1 = new prekidac_dp("P1", "uklop", "uključen", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "pdal1");
-r1 = new rastavljac("R1", "uklop", "rdal1");
-r2 = new rastavljac("R2", "uklop", "rdal2");
-r3 = new rastavljac("R3", "uklop", "rdal3");
 
-p2 = new prekidac_sp("P2", "uklop", "uključen", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "psp1");
-r4 = new rastavljac("R4", "uklop", "rsp1");
-r5 = new rastavljac("R5", "uklop", "rsp2");
+class polje {
+	constructor() {
+		this.stanje = "ukljuceno";
+	}
+}
+
+class dalekovodno_polje extends polje{
+	constructor() {
+		p1 = new prekidac_dp("P1", "uklop", "uključen", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "pdal1");
+		r1 = new rastavljac("R1", "uklop", "rdal1");
+		r2 = new rastavljac("R2", "uklop", "rdal2");
+		r3 = new rastavljac("R3", "uklop", "rdal3");
+	}
+}
+
+class spojno_polje extends polje{
+	constructor() {
+		p2 = new prekidac_sp("P2", "uklop", "uključen", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "psp1");
+		r4 = new rastavljac("R4", "uklop", "rsp1");
+		r5 = new rastavljac("R5", "uklop", "rsp2");
+	}
+}
+
+dvp = new dalekovodno_polje("DV_P_J", "uključeno", 220);
+spp = new spojno_polje("SP_P_J", "uključeno", 220);
+
+
+//constructor(ime, komanda, stanje, gubitakSF6_upoz, gubitakN2_blok, mintlak_blok, gubitakSF6_blok, gubitakulja_blok, APU_blok, kvar_grijanja, slika)
+
+
 //document.getElementById("test").innerHTML = "Stanje prekidaca " + p1.stanje + ", u položaju " + p1.komanda;
