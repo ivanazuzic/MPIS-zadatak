@@ -40,6 +40,7 @@ class APU{
 
 class rastavljac extends elementpostrojenja {
 	constructor(ime, stanje, slika){
+        super();
 		this.ime = ime;
 		this.stanje = stanje;
 		this.slika = slika;
@@ -136,6 +137,7 @@ class zastita{
 
 class distantna_zastita extends zastita{
 	constructor(ime, isklj, lone_pot, ltwo_pot, lthree_pot, zemljospoj_pot, stagetwo_pot, stagethree_pot, tkprijem, tkslanje, osjetljiva_zs){
+        super(ime);
 		this.ime = ime;
 		this.isklj = isklj;
 		this.lone_pot = lone_pot;
@@ -153,6 +155,7 @@ class distantna_zastita extends zastita{
 
 class nadstrujna_zastita extends zastita{
 	constructor(ime, isklj){
+        super(ime);
 		this.ime = ime;
 		this.isklj = isklj;
 		this.varijable = {isključenje: ["prorada", "prestanak"]};
@@ -161,6 +164,7 @@ class nadstrujna_zastita extends zastita{
 
 class zastita_zatajenje extends zastita{
 	constructor(ime, prvistup_isklj, drugistup_isklj, rastavljac_kvar, pomocnonap_off, test){
+        super(ime);
 		this.ime = ime;
 		this.prvistup_isklj = prvistup_isklj;
 		this.drugistup_isklj = drugistup_isklj;
@@ -173,6 +177,7 @@ class zastita_zatajenje extends zastita{
 
 class prekidac extends elementpostrojenja {
 	constructor(ime, komanda, stanje, gubitakSF6_upoz, gubitakN2_blok, mintlak_blok, gubitakSF6_blok, gubitakulja_blok, APU_blok, kvar_grijanja, slika){
+        super();
 		this.ime = ime;
 		this.komanda = komanda;
 		this.stanje = stanje;
@@ -258,8 +263,11 @@ class prekidac extends elementpostrojenja {
 }
 
 class prekidac_dp extends prekidac{
+    constructor(ime, komanda, stanje, gubitakSF6_upoz, gubitakN2_blok, mintlak_blok, gubitakSF6_blok, gubitakulja_blok, APU_blok, kvar_grijanja, slika) {
+        super(ime, komanda, stanje, gubitakSF6_upoz, gubitakN2_blok, mintlak_blok, gubitakSF6_blok, gubitakulja_blok, APU_blok, kvar_grijanja, slika);
+    }
 	smije_se_gasiti(){
-		if (r3.stanje == "uključen") {
+		if (this.r3.stanje == "uključen") {
 			return 0;
 		} else {
 			return 1;
@@ -267,7 +275,7 @@ class prekidac_dp extends prekidac{
 	}
 	
 	smije_se_paliti(){
-		if (r1.stanje == "uključen" && r2.stanje == "uključen") {
+		if (this.r1.stanje == "uključen" && this.r2.stanje == "uključen") {
 			return 1;
 		} else {
 			return 0;
@@ -276,12 +284,15 @@ class prekidac_dp extends prekidac{
 }
 
 class prekidac_sp extends prekidac{
+    constructor(ime, komanda, stanje, gubitakSF6_upoz, gubitakN2_blok, mintlak_blok, gubitakSF6_blok, gubitakulja_blok, APU_blok, kvar_grijanja, slika) {
+        super(ime, komanda, stanje, gubitakSF6_upoz, gubitakN2_blok, mintlak_blok, gubitakSF6_blok, gubitakulja_blok, APU_blok, kvar_grijanja, slika);
+    }
 	smije_se_gasiti(){
 		return 1;
 	}
 	
 	smije_se_paliti(){
-		if (r4.stanje == "uključen" && r5.stanje == "uključen") {
+		if (this.r4.stanje == "uključen" && this.r5.stanje == "uključen") {
 			return 1;
 		} else {
 			return 0;
@@ -298,18 +309,20 @@ class polje {
 
 class dalekovodno_polje extends polje{
 	constructor() {
-		p1 = new prekidac_dp("P1", "uklop", "uključen", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "pdal1");
-		r1 = new rastavljac("R1", "uklop", "rdal1");
-		r2 = new rastavljac("R2", "uklop", "rdal2");
-		r3 = new rastavljac("R3", "uklop", "rdal3");
+        super();
+		this.p1 = new prekidac_dp("P1", "uklop", "uključen", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "pdal1");
+		this.r1 = new rastavljac("R1", "uklop", "rdal1");
+		this.r2 = new rastavljac("R2", "uklop", "rdal2");
+		this.r3 = new rastavljac("R3", "uklop", "rdal3");
 	}
 }
 
 class spojno_polje extends polje{
 	constructor() {
-		p2 = new prekidac_sp("P2", "uklop", "uključen", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "psp1");
-		r4 = new rastavljac("R4", "uklop", "rsp1");
-		r5 = new rastavljac("R5", "uklop", "rsp2");
+        super();
+		this.p2 = new prekidac_sp("P2", "uklop", "uključen", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "psp1");
+		this.r4 = new rastavljac("R4", "uklop", "rsp1");
+		this.r5 = new rastavljac("R5", "uklop", "rsp2");
 	}
 }
 
