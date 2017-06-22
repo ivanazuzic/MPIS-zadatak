@@ -204,14 +204,28 @@ class prekidac{
 		this.varijable = {komanda: ["uklop", "isklop"], stanje: ["međupoložaj", "uključen", "isključen", "kvar signalizacije"], gubitakSF6_upoz: ["prorada", "prestanak"], gubitakN2_blok: ["prorada", "prestanak"], mintlak_blok: ["prorada", "prestanak"], gubitakSF6_blok: ["prorada", "prestanak"], gubitakulja_blok: ["prorada", "prestanak"], APU_blok: ["prorada", "prestanak"], kvar_grijanja: ["prorada", "prestanak"]};
 	}
 	
+	smije_se_gasiti(){
+	}
+	
+	smije_se_paliti(){
+	}
+	
 	promijeni_stanje(){
 		console.log("kliknut sam");
 		if (this.stanje == "uklop") {
-			this.stanje = "isklop";
-			document.getElementById(this.slika).src = "Slike/prekidac_iskljucen.png";
+			if (smije_se_gasiti()){
+				this.stanje = "isklop";
+				document.getElementById(this.slika).src = "Slike/prekidac_iskljucen.png";
+			} else {
+				
+			}
 		} else {
-			this.stanje = "uklop";
-			document.getElementById(this.slika).src = "Slike/prekidac_ukljucen.png";
+			if (smije_se_paliti()){
+				this.stanje = "uklop";
+				document.getElementById(this.slika).src = "Slike/prekidac_ukljucen.png";
+			} else {
+				
+			}
 		}
 	}
 	
@@ -254,13 +268,45 @@ class prekidac{
 	}	
 }
 
+class prekidac_dp extends prekidac{
+	smije_se_gasiti(){
+		if (r3.stanje == "uključen") {
+			return 0;
+		} else {
+			return 1;
+		}
+	}
+	
+	smije_se_paliti(){
+		if (r1.stanje == "uključen" && r2.stanje == "uključen") {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+}
+
+class prekidac_sp extends prekidac{
+	smije_se_gasiti(){
+		return 1;
+	}
+	
+	smije_se_paliti(){
+		if (r4.stanje == "uključen" && r5.stanje == "uključen") {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+}
+
 //constructor(ime, komanda, stanje, gubitakSF6_upoz, gubitakN2_blok, mintlak_blok, gubitakSF6_blok, gubitakulja_blok, APU_blok, kvar_grijanja, slika)
-p1 = new prekidac("P1", "uklop", "ukljucen", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "pdal1");
+p1 = new prekidac_dp("P1", "uklop", "uključen", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "pdal1");
 r1 = new rastavljac("R1", "uklop", "rdal1");
 r2 = new rastavljac("R2", "uklop", "rdal2");
 r3 = new rastavljac("R3", "uklop", "rdal3");
 
-p2 = new prekidac("P2", "uklop", "ukljucen", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "psp1");
+p2 = new prekidac_sp("P2", "uklop", "uključen", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "psp1");
 r4 = new rastavljac("R4", "uklop", "rsp1");
 r5 = new rastavljac("R5", "uklop", "rsp2");
 //document.getElementById("test").innerHTML = "Stanje prekidaca " + p1.stanje + ", u položaju " + p1.komanda;
