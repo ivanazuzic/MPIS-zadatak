@@ -167,7 +167,7 @@ class prekidač extends elementpostrojenja {
 		this.gubitakulja_blok = gubitakulja_blok;
 		this.APU_blok = APU_blok;
 		this.kvar_grijanja = kvar_grijanja;
-		this.varijable = {komanda: ["uklop", "isklop"], stanje: ["međupoložaj", "uključen", "isključen", "kvar signalizacije"], gubitakSF6_upoz: ["prorada", "prestanak"], gubitakN2_blok: ["prorada", "prestanak"], mintlak_blok: ["prorada", "prestanak"], gubitakSF6_blok: ["prorada", "prestanak"], gubitakulja_blok: ["prorada", "prestanak"], APU_blok: ["prorada", "prestanak"], kvar_grijanja: ["prorada", "prestanak"]};
+		this.varijable = {stanje: ["međupoložaj", "uključen", "isključen", "kvar signalizacije"], komanda: ["uklop", "isklop"], gubitakSF6_upoz: ["prorada", "prestanak"], gubitakN2_blok: ["prorada", "prestanak"], mintlak_blok: ["prorada", "prestanak"], gubitakSF6_blok: ["prorada", "prestanak"], gubitakulja_blok: ["prorada", "prestanak"], APU_blok: ["prorada", "prestanak"], kvar_grijanja: ["prorada", "prestanak"]};
 	}
 }
 
