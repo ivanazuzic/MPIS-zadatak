@@ -20,12 +20,21 @@ function err_visible(seconds) {
 document.getElementById("error_log").addEventListener("click", hideErr);
 
 class elementpostrojenja {
-	constructor() {
-		
+	constructor(ime) {
+        this.ime = ime;
+		this.varijable = {};
 	}
-	
+    
+    to_string(){
+        var str = "Ime: " + this.ime + "<br>";
+        for (var key in this.varijable) {
+            str += upcaseFirst(key) + ": " + this[key] + "<br>";
+        }
+        return str;
+	}
+    
 	prikazi_stanje(){
-		console.log("double-kliknut sam");
+		console.log("desno-kliknut sam");
 		document.getElementById("elem_stat").innerHTML = this.to_string();
 		document.getElementById("elem_stat").style.visibility = "visible";
 	}	
@@ -61,11 +70,10 @@ class APU{
 
 class rastavljac extends elementpostrojenja {
 	constructor(ime, stanje, slika, vrsta){
-        super();
-		this.ime = ime;
+        super(ime);
 		this.stanje = stanje;
 		this.slika = slika;
-		this.varijable = {komanda: ["uklop", "isklop"], stanje: ["međupoložaj", "uključen", "isključen", "kvar signalizacije"]};
+		this.varijable = {stanje: ["međupoložaj", "uključen", "isključen", "kvar signalizacije"]};
 		this.vrsta = vrsta;
 		if (this.stanje == "uključen") {
 			document.getElementById(this.slika).src = "Slike/rastavljac_ukljucen.png";
@@ -84,17 +92,14 @@ class rastavljac extends elementpostrojenja {
 			document.getElementById(this.slika).src = "Slike/rastavljac_ukljucen.png";
 		}
 	}
-		
-	to_string(){
-		return "Ime: " + this.ime + "<br>Komanda: " + this.komanda + "<br>Stanje: " + this.stanje + "<br>GubitakSF6 upozorenje: " + this.gubitakSF6_upoz + "<br>Gubitak N2 blokada: " + this.gubitakN2_blok + "<br>Minimalni tlak blokada: " + this.mintlak_blok + "<br>Gubitak SF6 blokada: " + this.gubitakSF6_blok + "<br>Gubitak ulja blokada: " + this.gubitakulja_blok + "<br>APU blokada: " + this.APU_blok + "<br>Kvar grijanja: " + this.kvar_grijanja + "<br>";
-	}
+    
 	to_string2(){
 		var tablica = "<table> <tr><td>Postrojenje</td><td>Napon</td><td>Dio postrojenja</td><td>Uređaj</td><td>Varijabla</td><td>Stanje</td></tr>";
 		
 		var uvod = "<td>TS-J</td><td>220</td><td>DV-J</td><td>rastavljač</td>";
 		
 		for (var property in this) {
-			if (this.hasOwnProperty(property) && property != "slika") {
+			if (this.hasOwnProperty(property) && property != "slika" && property != "varijable") {
 				tablica += "<tr>" + uvod + "<td>" + property+"</td><td>" + this[property]+"</td></tr>";
 			}
 		}
@@ -102,7 +107,7 @@ class rastavljac extends elementpostrojenja {
 		return tablica;
 	}
 	prikazi_stanje(){
-		console.log("double-kliknut sam");
+		console.log("desno-kliknut sam");
 		document.getElementById("elem_stat").innerHTML = this.to_string();
 		document.getElementById("elem_stat").style.visibility = "visible";
 	}	
@@ -111,7 +116,6 @@ class rastavljac extends elementpostrojenja {
 		var tablica = "<table> <tr><td>Postrojenje</td><td>Napon</td><td>Dio postrojenja</td><td>Uređaj</td><td>Varijabla</td><td>Stanje</td></tr>";
 		
 		var uvod = "<td>TS-J</td><td>220</td><td>DV-J</td><td>rastavljač</td>";
-		
 		for (var kljuc in this.varijable) {
 			var count = this.varijable[kljuc].length;
 			for(var i = 0; i < count; i++) {
@@ -123,22 +127,28 @@ class rastavljac extends elementpostrojenja {
 	}
 }
 
-class rastavljac_izlazni extends rastavljac{
-	constructor(komanda){
+class rastavljac_linijski extends rastavljac{
+	constructor(ime, stanje, komanda, slika, vrsta){
+        super(ime, stanje, slika, vrsta);
+        this.varijable.komanda =  ["uklop", "isklop"];
 		this.komanda = komanda;
 	}	
 }
 
 class rastavljac_sabirnicki extends rastavljac{
-	constructor(komanda){
+	constructor(ime, stanje, komanda, slika, vrsta){
+        super(ime, stanje, slika, vrsta);
+        this.varijable.komanda =  ["uklop", "isklop"];
 		this.komanda = komanda;
 	}	
 }
 
 class rastavljac_uzemljenja extends rastavljac{
-	constructor(){}
+	constructor(ime, stanje, slika, vrsta){
+        super(ime, stanje, slika, vrsta);
+    }
 	
-	svi_signali(){
+	/*svi_signali(){
 		var tablica = "<table> <tr><td>Postrojenje</td><td>Napon</td><td>Dio postrojenja</td><td>Uređaj</td><td>Varijabla</td><td>Stanje</td></tr>";
 		
 		var uvod = "<td>TS-J</td><td>220</td><td>DV-J</td><td>rastavljač</td>";
@@ -153,7 +163,7 @@ class rastavljac_uzemljenja extends rastavljac{
 		}
 		tablica = tablica + "</table><br>";
 		return tablica;
-	}
+	}*/
 }
 
 class zastita{
@@ -204,8 +214,7 @@ class zastita_zatajenje extends zastita{
 
 class prekidac extends elementpostrojenja {
 	constructor(ime, komanda, stanje, gubitakSF6_upoz, gubitakN2_blok, mintlak_blok, gubitakSF6_blok, gubitakulja_blok, APU_blok, kvar_grijanja, slika, vrsta){
-        super();
-		this.ime = ime;
+        super(ime);
 		this.komanda = komanda;
 		this.stanje = stanje;
 		this.gubitakSF6_upoz = gubitakSF6_upoz;
@@ -219,10 +228,6 @@ class prekidac extends elementpostrojenja {
 		this.varijable = {komanda: ["uklop", "isklop"], stanje: ["međupoložaj", "uključen", "isključen", "kvar signalizacije"], gubitakSF6_upoz: ["prorada", "prestanak"], gubitakN2_blok: ["prorada", "prestanak"], mintlak_blok: ["prorada", "prestanak"], gubitakSF6_blok: ["prorada", "prestanak"], gubitakulja_blok: ["prorada", "prestanak"], APU_blok: ["prorada", "prestanak"], kvar_grijanja: ["prorada", "prestanak"]};
 		this.vrsta = vrsta;
 		document.getElementById(this.slika).src = "Slike/prekidac_ukljucen.png";
-	}
-	
-	to_string(){
-		return "Ime: " + this.ime + "<br>Komanda: " + this.komanda + "<br>Stanje: " + this.stanje + "<br>GubitakSF6 upozorenje: " + this.gubitakSF6_upoz + "<br>Gubitak N2 blokada: " + this.gubitakN2_blok + "<br>Minimalni tlak blokada: " + this.mintlak_blok + "<br>Gubitak SF6 blokada: " + this.gubitakSF6_blok + "<br>Gubitak ulja blokada: " + this.gubitakulja_blok + "<br>APU blokada: " + this.APU_blok + "<br>Kvar grijanja: " + this.kvar_grijanja + "<br>";
 	}
 	
 	to_string2(){
@@ -255,7 +260,7 @@ class prekidac extends elementpostrojenja {
 	}
 	
 	prikazi_stanje(){
-		console.log("double-kliknut sam");
+		console.log("desno-kliknut sam");
 		document.getElementById("elem_stat").innerHTML = this.to_string();
 		document.getElementById("elem_stat").style.visibility = "visible";
 	}	
@@ -330,9 +335,9 @@ class dalekovodno_polje extends polje{
 class spojno_polje extends polje{
 	constructor() {
         super();
-		this.p2 = new prekidac("P2", "uklop", "uključen", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "psp1", "prekidac");
-		this.r4 = new rastavljac("R4", "isključen", "rsp1", "rastavljac");
-		this.r5 = new rastavljac("R5", "uključen", "rsp2", "rastavljac");
+		this.p2 = new prekidac("Prekidač 2", "uklop", "uključen", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "psp1", "prekidac");
+		this.r4 = new rastavljac_linijski("Rastavljač 4", "isključen", "uklop", "rsp1", "rastavljac");
+		this.r5 = new rastavljac_uzemljenja("Rastavljač 5", "uključen", "rsp2", "rastavljac");
 	}
     
 	smije_se_gasiti(predmet_promjene){

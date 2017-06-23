@@ -4,6 +4,7 @@
 	<title>MPIS</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<link rel="stylesheet" type="text/css" href="elementipostrojenja.css">
+    <script src="generic.js"></script>
 	<script>	
 	function lista_tren_dp(){
 		var dalekovodno_lista = dvp.p1.to_string2() + dvp.r1.to_string2() + dvp.r2.to_string2() + dvp.r3.to_string2();
@@ -101,10 +102,10 @@
 	function pali_gasi_polje(tren_polje, tren_btn){
 		if (tren_polje.stanje == "ukljuceno") {
 			tren_polje.stanje = "iskljuceno";
-		document.getElementById(tren_btn).style.background-color = "#f00";
+		document.getElementById(tren_btn).style.backgroundColor = "#f00";
 		} else {
 			tren_polje.stanje = "ukljuceno";
-		document.getElementById(tren_btn).style.background-color = "#0f0";
+		document.getElementById(tren_btn).style.backgroundColor = "#0f0";
 		}
 	}
 	</script>
