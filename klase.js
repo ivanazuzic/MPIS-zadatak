@@ -13,10 +13,10 @@ class elementpostrojenja {
         return str;
 	}
     
-    tren(){
+    tren(p){
 		var tablica = "<table> <tr><td>Postrojenje</td><td>Napon</td><td>Dio postrojenja</td><td>Uređaj</td><td>Varijabla</td><td>Stanje</td></tr>";
 		
-		var uvod = "<td>TS-J</td><td>220</td><td>DV-J</td><td>" + this.vrsta + "</td>";
+		var uvod = "<td>TS-J</td><td>"+p.napon+"</td><td>"+p.vrsta+"</td><td>" + this.vrsta + "</td>";
 		
         tablica += "<tr>" + uvod + "<td>ime</td><td>" + this.ime+"</td></tr>";
 		for (var property in this.varijable) {
@@ -26,10 +26,10 @@ class elementpostrojenja {
 		return tablica;
 	}
     
-    svi_signali(){
+    svi_signali(p){
 		var tablica = "<table> <tr><td>Postrojenje</td><td>Napon</td><td>Dio postrojenja</td><td>Uređaj</td><td>Varijabla</td><td>Stanje</td></tr>";
 		
-		var uvod = "<td>TS-J</td><td>220</td><td>DV-J</td><td>" + this.vrsta + "</td>";
+		var uvod = "<td>TS-J</td><td>"+p.napon+"</td><td>"+p.vrsta+"</td><td>" + this.vrsta + "</td>";
 		
 		for (var kljuc in this.varijable) {
 			var count = this.varijable[kljuc].length;
@@ -197,7 +197,7 @@ class polje {
         var lista = "<html><head><title>"+koliko+" "+this.vrsta+"</title><meta charset=\"UTF-8\"></head><body>";
         for (var obj in this) {
             if (this[obj] instanceof elementpostrojenja) {
-                lista += this[obj][koliko]();
+                lista += this[obj][koliko](this);
             }
         }
         lista += "</body></html>";
@@ -327,5 +327,5 @@ class spojno_polje extends polje{
 	}
 }
 
-dvp = new dalekovodno_polje("DV_P_J", "uključeno", 220);
-spp = new spojno_polje("SP_P_J", "uključeno", 220);
+dvp = new dalekovodno_polje("DV_J", "uključeno", 220);
+spp = new spojno_polje("SP_J", "uključeno", 220);
