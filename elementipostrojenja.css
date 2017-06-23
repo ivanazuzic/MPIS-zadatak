@@ -86,13 +86,15 @@
 	left: -130px;
 }
 
-.stanjeDV, .stanjeSV {
+.stanjeDV, .stanjeSV, #naponSV, #naponDV {
     float: left;
 	position: absolute;
 	top: 160px;
 }
 
-.stanjeSV {top: 190px;}
+.stanjeSV, #naponSV {top: 190px;}
+
+#naponSV, #naponDV {left: 225px;}
 
 #stanjeDV, #stanjeSV {
     padding: 5px;
