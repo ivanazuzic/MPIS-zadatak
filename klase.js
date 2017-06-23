@@ -192,7 +192,7 @@ class polje {
     
     provjeraZastite(zastita) {
         for (var key in zastita.varijable) {
-            if (zastita[key] == "prorada")
+            if (zastita.varijable[key][0] == "prorada" && zastita[key] == "prorada")
                 return 1;
         }
         return 0;
@@ -230,11 +230,13 @@ class polje {
     pali_gasi_polje(tren_btn){
         if (this.stanje == "uključeno") {
             this.stanje = "isključeno";
-            document.getElementById(tren_btn).style.backgroundColor = "#f00";
+            document.getElementById(tren_btn).style.backgroundColor = "#0f0";
+            document.getElementById(tren_btn).innerHTML = "Uključi";
             this.ugasi_polje();
         } else {
             this.stanje = "uključeno";
-            document.getElementById(tren_btn).style.backgroundColor = "#0f0";
+            document.getElementById(tren_btn).style.backgroundColor = "#f00";
+            document.getElementById(tren_btn).innerHTML = "Isključi";
             this.upali_polje();
         }
     }
@@ -303,6 +305,10 @@ class dalekovodno_polje extends polje{
             err_visible("Zaštita je u proradi i ne može se ugasiti polje", 5);
             return;
         }
+        if (this.provjeraZastite(this.p1)) {
+            err_visible("Prekidač ne radi te se ne može ugasiti polje", 5);
+            return;
+        }
         
         var fje = [0,0,0,0,1];
         var arg = [this.p1, this.r1, this.r2, this.r3, this.r6];
@@ -324,7 +330,12 @@ class dalekovodno_polje extends polje{
         if (this.provjeraZastite(this.zaštita_dist) ||
             this.provjeraZastite(this.zaštita_nadstr) ||
             this.provjeraZastite(this.zaštita_od_zatajenja)) {
-            err_visible("Zaštita je u proradi i ne može se ugasiti polje", 5);
+            err_visible("Zaštita je u proradi i ne može se upaliti polje", 5);
+            return;
+        }
+        
+        if (this.provjeraZastite(this.p1)) {
+            err_visible("Prekidač ne radi te se ne može upaliti polje", 5);
             return;
         }
         
