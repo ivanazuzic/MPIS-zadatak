@@ -52,18 +52,18 @@ class mjerni_pretvornik{
 	}
 }
 
-class brojilo{
+class brojilo extends elementpostrojenja {
 	constructor(ime, r_energija, alarm) {
-		this.ime = ime;
+        super(ime, "brojilo");
 		this.radna_energija = r_energija;
 		this.alarm = alarm;
 		this.varijable = {alarm: ["prorada", "prestanak"]};
 	}
 }
 
-class APU{
+class APU extends elementpostrojenja {
 	constructor(ime, onep, threep, blokada){
-		this.ime = ime;
+		super(ime, "APU");
 		this.onep = onep;
 		this.threep = threep;
 		this.blokada = blokada;
@@ -249,6 +249,7 @@ class polje {
                 document.getElementById(predmet_promjene.slika).src = "Slike/"+predmet_promjene.vrsta+"_isključen.png";
 			} else {
                 err_visible("Nije moguće ugasiti " + predmet_promjene.vrsta, 5);
+                return 1; // nešto ne valja
 			}
 		} else {
 			if (this.smije_se_paliti(predmet_promjene)){
@@ -259,8 +260,10 @@ class polje {
 				document.getElementById(predmet_promjene.slika).src = "Slike/"+predmet_promjene.vrsta+"_uključen.png";
 			} else {
                 err_visible("Nije moguće upaliti " + predmet_promjene.vrsta, 5);
+                return 1; // nešto ne valja
 			}
 		}
+        return 0; // sve 5
 	}
 }
 
