@@ -17,22 +17,22 @@
 		window.open("listaSveDVPolje.html","_blank");
 	}
 	function lista_tren_dp(){
-		var dalekovodno_lista = p1.to_string2() + r1.to_string2() + r2.to_string2() + r3.to_string2();
+		var dalekovodno_lista = dvp.p1.to_string2() + dvp.r1.to_string2() + dvp.r2.to_string2() + dvp.r3.to_string2();
 		sessionStorage.setItem("sent", dalekovodno_lista); 
 		window.open("listaSveDVPolje.html","_blank");
 	}
 	function lista_tren_sp(){
-		var spojno_lista = p2.to_string2() + r4.to_string2() + r5.to_string2();
+		var spojno_lista = spp.p2.to_string2() + spp.r4.to_string2() + spp.r5.to_string2();
 		sessionStorage.setItem("sent", spojno_lista); 
 		window.open("listaSveDVPolje.html","_blank");
 	}
 	function lista_sve_dp(){
-		var dalekovodno_lista = p1.svi_signali() + r1.svi_signali() + r2.svi_signali() + r3.svi_signali();
+		var dalekovodno_lista = dvp.p1.svi_signali() + dvp.r1.svi_signali() + dvp.r2.svi_signali() + dvp.r3.svi_signali();
 		sessionStorage.setItem("sent", dalekovodno_lista); 
 		window.open("listaSveDVPolje.html","_blank");
 	}
 	function lista_sve_sp(){
-		var spojno_lista = p2.svi_signali() + r4.svi_signali() + r5.svi_signali();
+		var spojno_lista = spp.p2.svi_signali() + spp.r4.svi_signali() + spp.r5.svi_signali();
 		sessionStorage.setItem("sent", spojno_lista); 
 		window.open("listaSveDVPolje.html","_blank");
 	}
@@ -43,28 +43,26 @@
 </head>
 
 <body>
-    <div id="navbar">
-        <ul>
-            <li><a href="">About</a></li>
-            <li><a href="">Help</a></li>
-            <li class="dropdown">
-                <a href="javascript:void(0)" class="dropbtn">Dalekovodno polje</a>
-                <div class="dropdown-content">
-                    <a href="#" onclick="lista_sve_dp()">Svi signali</a>
-                    <a href="#" onclick="lista_tren_dp()">Trenutni signali</a>
-                    <center><button type="button" class="btn">Uključi/Isključi</button></center>
-                </div>
-            </li>
-            <li class="dropdown">
-                <a href="javascript:void(0)" class="dropbtn">Spojno polje</a>
-                <div class="dropdown-content">
-                    <a href="#" onclick="lista_sve_sp()">Svi signali</a>
-                    <a href="#" onclick="lista_tren_sp()">Trenutni signali</a>
-                    <center><button type="button" class="btn">Uključi/Isključi</button></center>
-                </div>
-            </li>
-        </ul>
-    </div>
+	<ul>
+		<li><a href="">About</a></li>
+		<li><a href="">Help</a></li>
+		<li class="dropdown">
+			<a href="javascript:void(0)" class="dropbtn">Dalekovodno polje</a>
+			<div class="dropdown-content">
+				<a href="#" onclick="lista_sve_dp()">Svi signali</a>
+				<a href="#" onclick="lista_tren_dp()">Trenutni signali</a>
+				<center><button type="button" class="btn">Uključi/Isključi</button></center>
+			</div>
+		</li>
+		<li class="dropdown">
+			<a href="javascript:void(0)" class="dropbtn">Spojno polje</a>
+			<div class="dropdown-content">
+				<a href="#" onclick="lista_sve_sp()">Svi signali</a>
+				<a href="#" onclick="lista_tren_sp()">Trenutni signali</a>
+				<center><button type="button" class="btn">Uključi/Isključi</button></center>
+			</div>
+		</li>
+	</ul>
 	<!--Ovo su primjeri kako se koriste klase i funkcije.-->
 	<p id="demo"></p>
 	<p id="demo2"></p>
