@@ -82,9 +82,9 @@ class rastavljač extends elementpostrojenja {
 		this.slika = slika;
 		this.varijable = {stanje: ["međupoložaj", "uključen", "isključen", "kvar signalizacije"]};
 		if (this.stanje == "uključen") {
-			document.getElementById(this.slika).src = "Slike/rastavljac_ukljucen.png";
+			document.getElementById(this.slika).src = "Slike/rastavljač_ukljucen.png";
 		} else {
-			document.getElementById(this.slika).src = "Slike/rastavljac_iskljucen.png";
+			document.getElementById(this.slika).src = "Slike/rastavljač_iskljucen.png";
 		}
 	}	
 	
@@ -92,15 +92,15 @@ class rastavljač extends elementpostrojenja {
 		console.log("kliknut sam")
 		if (this.stanje == "uklop") {
 			this.stanje = "isklop";
-			document.getElementById(this.slika).src = "Slike/rastavljac_iskljucen.png";
+			document.getElementById(this.slika).src = "Slike/rastavljač_iskljucen.png";
 		} else {
 			this.stanje = "uklop";
-			document.getElementById(this.slika).src = "Slike/rastavljac_ukljucen.png";
+			document.getElementById(this.slika).src = "Slike/rastavljač_ukljucen.png";
 		}
 	}
 }
 
-class rastavljac_linijski extends rastavljač{
+class rastavljač_linijski extends rastavljač{
 	constructor(ime, stanje, komanda, slika, vrsta){
         super(ime, stanje, slika, vrsta);
         this.varijable.komanda =  ["uklop", "isklop"];
@@ -108,7 +108,7 @@ class rastavljac_linijski extends rastavljač{
 	}	
 }
 
-class rastavljac_sabirnicki extends rastavljač{
+class rastavljač_sabirnicki extends rastavljač{
 	constructor(ime, stanje, komanda, slika, vrsta){
         super(ime, stanje, slika, vrsta);
         this.varijable.komanda =  ["uklop", "isklop"];
@@ -116,7 +116,7 @@ class rastavljac_sabirnicki extends rastavljač{
 	}	
 }
 
-class rastavljac_uzemljenja extends rastavljač{
+class rastavljač_uzemljenja extends rastavljač{
 	constructor(ime, stanje, slika, vrsta){
         super(ime, stanje, slika, vrsta);
     }
@@ -156,12 +156,12 @@ class nadstrujna_zastita extends zastita{
 }
 
 class zastita_zatajenje extends zastita{
-	constructor(ime, prvistup_isklj, drugistup_isklj, rastavljac_kvar, pomocnonap_off, test){
+	constructor(ime, prvistup_isklj, drugistup_isklj, rastavljač_kvar, pomocnonap_off, test){
         super(ime);
 		this.ime = ime;
 		this.prvistup_isklj = prvistup_isklj;
 		this.drugistup_isklj = drugistup_isklj;
-		this.rastavljac_kvar = rastavljac_kvar;
+		this.rastavljač_kvar = rastavljač_kvar;
 		this.pomocnonap_off = pomocnonap_off;
 		this.test = test;
 		this.varijable = {_1_stupanj_isključenje: ["prorada", "prestanak"], _2_stupanj_isključenje: ["prorada", "prestanak"], rastavljač_kvar: ["prorada", "prestanak"], pomoćno_napajanje_nestanak: ["prorada", "prestanak"], u_testu: ["prorada", "prestanak"]};
@@ -182,7 +182,7 @@ class prekidač extends elementpostrojenja {
 		this.kvar_grijanja = kvar_grijanja;
 		this.slika = slika;
 		this.varijable = {komanda: ["uklop", "isklop"], stanje: ["međupoložaj", "uključen", "isključen", "kvar signalizacije"], gubitakSF6_upoz: ["prorada", "prestanak"], gubitakN2_blok: ["prorada", "prestanak"], mintlak_blok: ["prorada", "prestanak"], gubitakSF6_blok: ["prorada", "prestanak"], gubitakulja_blok: ["prorada", "prestanak"], APU_blok: ["prorada", "prestanak"], kvar_grijanja: ["prorada", "prestanak"]};
-		document.getElementById(this.slika).src = "Slike/prekidac_ukljucen.png";
+		document.getElementById(this.slika).src = "Slike/prekidač_ukljucen.png";
 	}
 }
 
@@ -214,6 +214,40 @@ class polje {
             document.getElementById(tren_btn).style.backgroundColor = "#0f0";
         }
     }
+    
+    smije_se_gasiti(predmet_promjene){
+	}
+	
+	smije_se_paliti(predmet_promjene){
+	}
+    
+    promijeni_stanje(predmet_promjene){
+		console.log("kliknut sam");
+		console.log(predmet_promjene.stanje, predmet_promjene.ime, predmet_promjene.vrsta);
+		if (predmet_promjene.stanje == "uključen") {
+			if (this.smije_se_gasiti(predmet_promjene)){
+				predmet_promjene.stanje = "isključen";
+				if ("komanda" in predmet_promjene) {
+					predmet_promjene.komanda = "isklop";
+                }
+                document.getElementById(predmet_promjene.slika).src = "Slike/"+predmet_promjene.vrsta+"_iskljucen.png";
+			} else {
+				console.log("smeć");
+                err_visible("Nije moguće ugasiti " + predmet_promjene.vrsta, 5);
+			}
+		} else {
+			if (this.smije_se_paliti(predmet_promjene)){
+				predmet_promjene.stanje = "uključen";
+				if ("komanda" in predmet_promjene) {
+					predmet_promjene.komanda = "uklop"; 
+                }
+				document.getElementById(predmet_promjene.slika).src = "Slike/"+predmet_promjene.vrsta+"_ukljucen.png";
+			} else {
+				console.log("antismeć");
+                err_visible("Nije moguće upaliti " + predmet_promjene.vrsta, 5);
+			}
+		}
+	}
 }
 
 class dalekovodno_polje extends polje{
@@ -240,48 +274,14 @@ class dalekovodno_polje extends polje{
 			return 1;
         return (predmet_promjene == this.r3 && this.p1.stanje == "isključen");
 	}
-	
-	promijeni_stanje(predmet_promjene){
-		console.log("kliknut sam");
-		console.log(predmet_promjene.stanje, predmet_promjene.ime, predmet_promjene.vrsta);
-		if (predmet_promjene.stanje == "uključen") {
-			if (this.smije_se_gasiti(predmet_promjene)){
-				predmet_promjene.stanje = "isključen";
-				if (predmet_promjene.vrsta == "prekidač") {
-					predmet_promjene.komanda = "isklop";
-					document.getElementById(predmet_promjene.slika).src = "Slike/prekidac_iskljucen.png";
-				} else {
-					document.getElementById(predmet_promjene.slika).src = "Slike/rastavljac_iskljucen.png";
-				}
-			} else {
-				console.log("smeć");
-                document.getElementById("error_log").innerHTML += "Nije moguće ugasiti " + predmet_promjene.vrsta + ".<br>";
-                err_visible(5);
-			}
-		} else {
-			if (this.smije_se_paliti(predmet_promjene)){
-				predmet_promjene.stanje = "uključen";
-				if (predmet_promjene.vrsta == "prekidač") {
-					predmet_promjene.komanda = "uklop"; 
-					document.getElementById(predmet_promjene.slika).src = "Slike/prekidac_ukljucen.png";
-				} else {
-					document.getElementById(predmet_promjene.slika).src = "Slike/rastavljac_ukljucen.png";
-				}
-			} else {
-				console.log("antismeć");
-                document.getElementById("error_log").innerHTML += "Nije moguće upaliti " + predmet_promjene.vrsta + ".<br>";
-                err_visible(5);
-			}
-		}
-	}
 }
 
 class spojno_polje extends polje{
 	constructor(vrsta, stanje, napon) {
         super(vrsta, stanje, napon);
 		this.p2 = new prekidač("Prekidač 2", "uklop", "uključen", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "psp1", "prekidač");
-		this.r4 = new rastavljac_linijski("Rastavljač 4", "isključen", "uklop", "rsp1", "rastavljač");
-		this.r5 = new rastavljac_uzemljenja("Rastavljač 5", "uključen", "rsp2", "rastavljač");
+		this.r4 = new rastavljač_linijski("Rastavljač 4", "isključen", "uklop", "rsp1", "rastavljač");
+		this.r5 = new rastavljač_uzemljenja("Rastavljač 5", "uključen", "rsp2", "rastavljač");
 	}
     
 	smije_se_gasiti(predmet_promjene){
@@ -290,40 +290,6 @@ class spojno_polje extends polje{
 	
 	smije_se_paliti(predmet_promjene){
         return (predmet_promjene.vrsta == "prekidač") || (this.p2.stanje == "isključen" && this.r4.stanje == "isključen" && this.r5.stanje == "isključen");
-	}
-	
-	promijeni_stanje(predmet_promjene){
-		console.log("kliknut sam");
-		console.log(predmet_promjene.stanje, predmet_promjene.ime, predmet_promjene.vrsta);
-		if (predmet_promjene.stanje == "uključen") {
-			if (this.smije_se_gasiti(predmet_promjene)){
-				predmet_promjene.stanje = "isključen";
-				if (predmet_promjene.vrsta == "prekidač") {
-					predmet_promjene.komanda = "isklop";
-					document.getElementById(predmet_promjene.slika).src = "Slike/prekidac_iskljucen.png";
-				} else {
-					document.getElementById(predmet_promjene.slika).src = "Slike/rastavljac_iskljucen.png";
-				}
-			} else {
-				console.log("smeć");
-                document.getElementById("error_log").innerHTML += "Nije moguće ugasiti " + predmet_promjene.vrsta + ".<br>";
-                err_visible(5);
-			}
-		} else {
-			if (this.smije_se_paliti(predmet_promjene)){
-				predmet_promjene.stanje = "uključen";
-				if (predmet_promjene.vrsta == "prekidač") {
-					predmet_promjene.komanda = "uklop"; 
-					document.getElementById(predmet_promjene.slika).src = "Slike/prekidac_ukljucen.png";
-				} else {
-					document.getElementById(predmet_promjene.slika).src = "Slike/rastavljac_ukljucen.png";
-				}
-			} else {
-				console.log("antismeć");
-                document.getElementById("error_log").innerHTML += "Nije moguće upaliti " + predmet_promjene.vrsta + ".<br>";
-                err_visible(5);
-			}
-		}
 	}
 }
 

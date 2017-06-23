@@ -12,7 +12,8 @@ function hideErr() {
     clearTimeout(errTimeout);
 }
 
-function err_visible(seconds) {
+function err_visible(errmsg, seconds) {
+    document.getElementById("error_log").innerHTML += errmsg + ".<br>";
     document.getElementById("error_log").style.visibility = "visible";
     if (!isErrVisible) {
         isErrVisible = true;
