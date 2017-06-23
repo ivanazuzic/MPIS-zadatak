@@ -44,7 +44,7 @@ class elementpostrojenja {
 	}
 }
 
-class mjerni_pretvornik{
+class mjerni_pretvornik {
 	constructor(ime, r_snaga, napon) {
 		this.ime = ime;
 		this.radna_snaga = r_snaga;
