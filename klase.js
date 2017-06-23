@@ -1,5 +1,25 @@
-class elementpostrojenja {
+/* error log gluposti */
+var isErrVisible = false, errTimeout;
 
+function hideErr() {
+    document.getElementById("error_log").style.visibility = "hidden";
+    document.getElementById("error_log").innerHTML= "";
+    isErrVisible = false;
+    clearTimeout(errTimeout);
+}
+
+function err_visible(seconds) {
+    document.getElementById("error_log").style.visibility = "visible";
+    if (!isErrVisible) {
+        isErrVisible = true;
+        errTimeout = setTimeout(hideErr, seconds*1000);
+    }
+}
+
+/* actual kod */
+document.getElementById("error_log").addEventListener("click", hideErr);
+
+class elementpostrojenja {
 	constructor() {
 		
 	}
@@ -12,12 +32,11 @@ class elementpostrojenja {
 	
 }
 
-
 class mjerni_pretvornik{
 	constructor(ime, r_snaga, napon) {
 		this.ime = ime;
-		radna_snaga = r_snaga;
-		napon = napon; 
+		this.radna_snaga = r_snaga;
+		this.napon = napon; 
 	}
 }
 
@@ -264,31 +283,13 @@ class dalekovodno_polje extends polje{
 	}
 	
 	smije_se_gasiti(predmet_promjene){
-		if (predmet_promjene.vrsta == "prekidac") {
-			return 1;
-		} else {
-			if (this.p1.stanje == "isključen") {
-				return 1;
-			} else {
-				return 0;
-			}
-		}
+        return (predmet_promjene.vrsta == "prekidac") || (this.p1.stanje == "isključen");
 	}
 	
 	smije_se_paliti(predmet_promjene){
-		if (predmet_promjene.vrsta == "prekidac") {
+		if ((predmet_promjene.vrsta == "prekidac") || (this.p1.stanje == "isključen" && this.r1.stanje == "isključen" && this.r2.stanje == "isključen"))
 			return 1;
-		} else {
-			if (this.p1.stanje == "isključen" && this.r1.stanje == "isključen" && this.r2.stanje == "isključen") {
-				return 1;
-			} else {
-				if (predmet_promjene == this.r3 && this.p1.stanje == "isključen") {
-					return 1;
-				} else {
-					return 0;
-				}
-			}
-		}
+        return (predmet_promjene == this.r3 && this.p1.stanje == "isključen");
 	}
 	
 	promijeni_stanje(predmet_promjene){
@@ -305,8 +306,8 @@ class dalekovodno_polje extends polje{
 				}
 			} else {
 				console.log("smeć");
-                document.getElementById("error_log").innerHTML = "Nije moguće ugasiti " + predmet_promjene.vrsta + ".<br>";
-                document.getElementById("error_log").style.visibility = "visible";
+                document.getElementById("error_log").innerHTML += "Nije moguće ugasiti " + predmet_promjene.vrsta + ".<br>";
+                err_visible(5);
 			}
 		} else {
 			if (this.smije_se_paliti(predmet_promjene)){
@@ -319,8 +320,8 @@ class dalekovodno_polje extends polje{
 				}
 			} else {
 				console.log("antismeć");
-                document.getElementById("error_log").innerHTML = "Nije moguće upaliti " + predmet_promjene.vrsta + ".<br>";
-                document.getElementById("error_log").style.visibility = "visible";
+                document.getElementById("error_log").innerHTML += "Nije moguće upaliti " + predmet_promjene.vrsta + ".<br>";
+                err_visible(5);
 			}
 		}
 	}
@@ -330,31 +331,16 @@ class spojno_polje extends polje{
 	constructor() {
         super();
 		this.p2 = new prekidac("P2", "uklop", "uključen", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "psp1", "prekidac");
-		this.r4 = new rastavljac("R4", "isljučen", "rsp1", "rastavljac");
+		this.r4 = new rastavljac("R4", "isključen", "rsp1", "rastavljac");
 		this.r5 = new rastavljac("R5", "uključen", "rsp2", "rastavljac");
 	}
+    
 	smije_se_gasiti(predmet_promjene){
-		if (predmet_promjene.vrsta == "prekidac") {
-			return 1;
-		} else {
-			if (this.p2.stanje == "uključen") {
-				return 0;
-			} else {
-				return 1;
-			}
-		}
+        return (predmet_promjene.vrsta == "prekidac") || (this.p2.stanje != "uključen");
 	}
 	
 	smije_se_paliti(predmet_promjene){
-		if (predmet_promjene.vrsta == "prekidac") {
-			return 1;
-		} else {
-			if (this.p2.stanje == "isključen" && this.r4.stanje == "isključen" && this.r5.stanje == "isključen") {
-				return 1;
-			} else {
-				return 0;
-			}
-		}
+        return (predmet_promjene.vrsta == "prekidac") || (this.p2.stanje == "isključen" && this.r4.stanje == "isključen" && this.r5.stanje == "isključen");
 	}
 	
 	promijeni_stanje(predmet_promjene){
@@ -371,8 +357,8 @@ class spojno_polje extends polje{
 				}
 			} else {
 				console.log("smeć");
-                document.getElementById("error_log").innerHTML = "Nije moguće ugasiti " + predmet_promjene.vrsta + ".<br>";
-                document.getElementById("error_log").style.visibility = "visible";
+                document.getElementById("error_log").innerHTML += "Nije moguće ugasiti " + predmet_promjene.vrsta + ".<br>";
+                err_visible(5);
 			}
 		} else {
 			if (this.smije_se_paliti(predmet_promjene)){
@@ -385,8 +371,8 @@ class spojno_polje extends polje{
 				}
 			} else {
 				console.log("antismeć");
-                document.getElementById("error_log").innerHTML = "Nije moguće upaliti " + predmet_promjene.vrsta + ".<br>";
-                document.getElementById("error_log").style.visibility = "visible";
+                document.getElementById("error_log").innerHTML += "Nije moguće upaliti " + predmet_promjene.vrsta + ".<br>";
+                err_visible(5);
 			}
 		}
 	}
@@ -394,8 +380,3 @@ class spojno_polje extends polje{
 
 dvp = new dalekovodno_polje("DV_P_J", "uključeno", 220);
 spp = new spojno_polje("SP_P_J", "uključeno", 220);
-
-//constructor(ime, komanda, stanje, gubitakSF6_upoz, gubitakN2_blok, mintlak_blok, gubitakSF6_blok, gubitakulja_blok, APU_blok, kvar_grijanja, slika)
-
-
-//document.getElementById("test").innerHTML = "Stanje prekidaca " + p1.stanje + ", u položaju " + p1.komanda;
