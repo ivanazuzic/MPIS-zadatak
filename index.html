@@ -2,40 +2,9 @@
 
 <head>
 	<title>MPIS</title>
+    <meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<link rel="stylesheet" type="text/css" href="elementipostrojenja.css">
-    <script src="generic.js"></script>
-	<script>	
-	function lista_tren_dp(){
-		var dalekovodno_lista = dvp.p1.to_string2() + dvp.r1.to_string2() + dvp.r2.to_string2() + dvp.r3.to_string2();
-		sessionStorage.setItem("sent", dalekovodno_lista); 
-		window.open("listaSveDVPolje.html","_blank");
-	}
-	function lista_tren_sp(){
-		var spojno_lista = spp.p2.to_string2() + spp.r4.to_string2() + spp.r5.to_string2();
-		sessionStorage.setItem("sent", spojno_lista); 
-		window.open("listaSveDVPolje.html","_blank");
-	}
-	function lista_sve_dp(){
-		var dalekovodno_lista = dvp.p1.svi_signali() + dvp.r1.svi_signali() + dvp.r2.svi_signali() + dvp.r3.svi_signali();
-		sessionStorage.setItem("sent", dalekovodno_lista); 
-		window.open("listaSveDVPolje.html","_blank");
-	}
-	function lista_sve_sp(){
-		var spojno_lista = spp.p2.svi_signali() + spp.r4.svi_signali() + spp.r5.svi_signali();
-		sessionStorage.setItem("sent", spojno_lista); 
-		window.open("listaSveDVPolje.html","_blank");
-	}
-	function pali_gasi_polje(tren_polje, tren_btn){
-		if (tren_polje.stanje == "ukljuceno") {
-			tren_polje.stanje = "iskljuceno";
-			document.getElementById(tren_btn).style.backgroundColor = "#f00";
-		} else {
-			tren_polje.stanje = "ukljuceno";
-			document.getElementById(tren_btn).style.backgroundColor = "#0f0";
-		}
-	}
-	</script>
 	<style>
 	</style>
 </head>
@@ -48,17 +17,17 @@
             <li class="dropdown">
                 <a href="javascript:void(0)" class="dropbtn">Dalekovodno polje</a>
                 <div class="dropdown-content">
-                    <a href="#" onclick="lista_sve_dp()">Svi signali</a>
-                    <a href="#" onclick="lista_tren_dp()">Trenutni signali</a>
-                    <center><button type="button" class="btn" id="btn1" style="background-color: #0f0;" onclick='pali_gasi_polje(dvp, "btn1")'>Uključi/Isključi</button></center>
+                    <a href="#" onclick='dvp.izlistaj("svi_signali")'>Svi signali</a>
+                    <a href="#" onclick='dvp.izlistaj("tren")'>Trenutni signali</a>
+                    <center><button type="button" class="btn" id="btn1" style="background-color: #0f0;" onclick='dvp.pali_gasi_polje("btn1")'>Uključi/Isključi</button></center>
                 </div>
             </li>
             <li class="dropdown">
                 <a href="javascript:void(0)" class="dropbtn">Spojno polje</a>
                 <div class="dropdown-content">
-                    <a href="#" onclick="lista_sve_sp()">Svi signali</a>
-                    <a href="#" onclick="lista_tren_sp()">Trenutni signali</a>
-                    <center><button type="button" class="btn" id="btn2"  style="background-color: #f00;"  onclick='pali_gasi_polje(spp, "btn2")'>Uključi/Isključi</button></center>
+                    <a href="#" onclick='spp.izlistaj("svi_signali")'>Svi signali</a>
+                    <a href="#" onclick='spp.izlistaj("tren")'>Trenutni signali</a>
+                    <center><button type="button" class="btn" id="btn2"  style="background-color: #f00;"  onclick='spp.pali_gasi_polje("btn2")'>Uključi/Isključi</button></center>
                 </div>
             </li>
         </ul>
@@ -97,18 +66,8 @@
 	</div>
 	<div id="error_log" class="err" style="visibility: hidden;">
     </div>
+    <script src="generic.js"></script>
 	<script src="klase.js"></script>
-	<script>
-	function pali_gasi_polje(tren_polje, tren_btn){
-		if (tren_polje.stanje == "ukljuceno") {
-			tren_polje.stanje = "iskljuceno";
-		document.getElementById(tren_btn).style.backgroundColor = "#f00";
-		} else {
-			tren_polje.stanje = "ukljuceno";
-		document.getElementById(tren_btn).style.backgroundColor = "#0f0";
-		}
-	}
-	</script>
 </body>
 
 </html>

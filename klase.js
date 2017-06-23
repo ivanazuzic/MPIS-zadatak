@@ -13,7 +13,7 @@ class elementpostrojenja {
         return str;
 	}
     
-    to_string2(){
+    tren(){
 		var tablica = "<table> <tr><td>Postrojenje</td><td>Napon</td><td>Dio postrojenja</td><td>Uređaj</td><td>Varijabla</td><td>Stanje</td></tr>";
 		
 		var uvod = "<td>TS-J</td><td>220</td><td>DV-J</td><td>" + this.vrsta + "</td>";
@@ -187,14 +187,38 @@ class prekidač extends elementpostrojenja {
 }
 
 class polje {
-	constructor() {
-		this.stanje = "ukljuceno";
+	constructor(vrsta, stanje, napon) {
+		this.stanje = stanje;
+        this.vrsta = vrsta;
+        this.napon = napon;
 	}
+    
+    izlistaj(koliko) {
+        var lista = "<html><head><title>"+koliko+" "+this.vrsta+"</title><meta charset=\"UTF-8\"></head><body>";
+        for (var obj in this) {
+            if (this[obj] instanceof elementpostrojenja) {
+                lista += this[obj][koliko]();
+            }
+        }
+        lista += "</body></html>";
+        var opened = window.open("");
+        opened.document.write(lista);
+    }
+    
+    pali_gasi_polje(tren_btn){
+        if (this.stanje == "ukljuceno") {
+            this.stanje = "iskljuceno";
+            document.getElementById(tren_btn).style.backgroundColor = "#f00";
+        } else {
+            this.stanje = "ukljuceno";
+            document.getElementById(tren_btn).style.backgroundColor = "#0f0";
+        }
+    }
 }
 
 class dalekovodno_polje extends polje{
-	constructor() {
-        super();
+	constructor(vrsta, stanje, napon) {
+        super(vrsta, stanje, napon);
 		this.p1 = new prekidač("Prekidač 1", "uklop", "uključen", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "pdal1", "prekidač");
 		this.r1 = new rastavljač("Rastavljač 1", "isključen", "rdal1", "rastavljač");
 		this.r2 = new rastavljač("Rastavljač 2", "uključen", "rdal2", "rastavljač");
@@ -253,8 +277,8 @@ class dalekovodno_polje extends polje{
 }
 
 class spojno_polje extends polje{
-	constructor() {
-        super();
+	constructor(vrsta, stanje, napon) {
+        super(vrsta, stanje, napon);
 		this.p2 = new prekidač("Prekidač 2", "uklop", "uključen", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "psp1", "prekidač");
 		this.r4 = new rastavljac_linijski("Rastavljač 4", "isključen", "uklop", "rsp1", "rastavljač");
 		this.r5 = new rastavljac_uzemljenja("Rastavljač 5", "uključen", "rsp2", "rastavljač");
