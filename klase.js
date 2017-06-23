@@ -1,27 +1,7 @@
-/* error log gluposti */
-var isErrVisible = false, errTimeout;
-
-function hideErr() {
-    document.getElementById("error_log").style.visibility = "hidden";
-    document.getElementById("error_log").innerHTML= "";
-    isErrVisible = false;
-    clearTimeout(errTimeout);
-}
-
-function err_visible(seconds) {
-    document.getElementById("error_log").style.visibility = "visible";
-    if (!isErrVisible) {
-        isErrVisible = true;
-        errTimeout = setTimeout(hideErr, seconds*1000);
-    }
-}
-
-/* actual kod */
-document.getElementById("error_log").addEventListener("click", hideErr);
-
 class elementpostrojenja {
-	constructor(ime) {
+	constructor(ime, vrsta) {
         this.ime = ime;
+        this.vrsta = vrsta;
 		this.varijable = {};
 	}
     
@@ -33,12 +13,39 @@ class elementpostrojenja {
         return str;
 	}
     
+    to_string2(){
+		var tablica = "<table> <tr><td>Postrojenje</td><td>Napon</td><td>Dio postrojenja</td><td>Uređaj</td><td>Varijabla</td><td>Stanje</td></tr>";
+		
+		var uvod = "<td>TS-J</td><td>220</td><td>DV-J</td><td>" + this.vrsta + "</td>";
+		
+        tablica += "<tr>" + uvod + "<td>ime</td><td>" + this.ime+"</td></tr>";
+		for (var property in this.varijable) {
+            tablica += "<tr>" + uvod + "<td>" + property+"</td><td>" + this[property]+"</td></tr>";
+		}
+		tablica = tablica + "</table><br>";
+		return tablica;
+	}
+    
+    svi_signali(){
+		var tablica = "<table> <tr><td>Postrojenje</td><td>Napon</td><td>Dio postrojenja</td><td>Uređaj</td><td>Varijabla</td><td>Stanje</td></tr>";
+		
+		var uvod = "<td>TS-J</td><td>220</td><td>DV-J</td><td>" + this.vrsta + "</td>";
+		
+		for (var kljuc in this.varijable) {
+			var count = this.varijable[kljuc].length;
+			for(var i = 0; i < count; i++) {
+				tablica += "<tr>" + uvod + "<td>" + kljuc +"</td><td>" + this.varijable[kljuc][i] +"</td></tr>";
+			}
+		}
+		tablica = tablica + "</table><br>";
+		return tablica;
+	}
+    
 	prikazi_stanje(){
 		console.log("desno-kliknut sam");
 		document.getElementById("elem_stat").innerHTML = this.to_string();
 		document.getElementById("elem_stat").style.visibility = "visible";
-	}	
-	
+	}
 }
 
 class mjerni_pretvornik{
@@ -68,13 +75,12 @@ class APU{
 	}
 }
 
-class rastavljac extends elementpostrojenja {
+class rastavljač extends elementpostrojenja {
 	constructor(ime, stanje, slika, vrsta){
-        super(ime);
+        super(ime, vrsta);
 		this.stanje = stanje;
 		this.slika = slika;
 		this.varijable = {stanje: ["međupoložaj", "uključen", "isključen", "kvar signalizacije"]};
-		this.vrsta = vrsta;
 		if (this.stanje == "uključen") {
 			document.getElementById(this.slika).src = "Slike/rastavljac_ukljucen.png";
 		} else {
@@ -92,42 +98,9 @@ class rastavljac extends elementpostrojenja {
 			document.getElementById(this.slika).src = "Slike/rastavljac_ukljucen.png";
 		}
 	}
-    
-	to_string2(){
-		var tablica = "<table> <tr><td>Postrojenje</td><td>Napon</td><td>Dio postrojenja</td><td>Uređaj</td><td>Varijabla</td><td>Stanje</td></tr>";
-		
-		var uvod = "<td>TS-J</td><td>220</td><td>DV-J</td><td>rastavljač</td>";
-		
-		for (var property in this) {
-			if (this.hasOwnProperty(property) && property != "slika" && property != "varijable") {
-				tablica += "<tr>" + uvod + "<td>" + property+"</td><td>" + this[property]+"</td></tr>";
-			}
-		}
-		tablica = tablica + "</table><br>";
-		return tablica;
-	}
-	prikazi_stanje(){
-		console.log("desno-kliknut sam");
-		document.getElementById("elem_stat").innerHTML = this.to_string();
-		document.getElementById("elem_stat").style.visibility = "visible";
-	}	
-	
-	svi_signali(){
-		var tablica = "<table> <tr><td>Postrojenje</td><td>Napon</td><td>Dio postrojenja</td><td>Uređaj</td><td>Varijabla</td><td>Stanje</td></tr>";
-		
-		var uvod = "<td>TS-J</td><td>220</td><td>DV-J</td><td>rastavljač</td>";
-		for (var kljuc in this.varijable) {
-			var count = this.varijable[kljuc].length;
-			for(var i = 0; i < count; i++) {
-				tablica += "<tr>" + uvod + "<td>" + kljuc +"</td><td>" + this.varijable[kljuc][i] +"</td></tr>";
-			}
-		}
-		tablica = tablica + "</table><br>";
-		return tablica;
-	}
 }
 
-class rastavljac_linijski extends rastavljac{
+class rastavljac_linijski extends rastavljač{
 	constructor(ime, stanje, komanda, slika, vrsta){
         super(ime, stanje, slika, vrsta);
         this.varijable.komanda =  ["uklop", "isklop"];
@@ -135,7 +108,7 @@ class rastavljac_linijski extends rastavljac{
 	}	
 }
 
-class rastavljac_sabirnicki extends rastavljac{
+class rastavljac_sabirnicki extends rastavljač{
 	constructor(ime, stanje, komanda, slika, vrsta){
         super(ime, stanje, slika, vrsta);
         this.varijable.komanda =  ["uklop", "isklop"];
@@ -143,27 +116,10 @@ class rastavljac_sabirnicki extends rastavljac{
 	}	
 }
 
-class rastavljac_uzemljenja extends rastavljac{
+class rastavljac_uzemljenja extends rastavljač{
 	constructor(ime, stanje, slika, vrsta){
         super(ime, stanje, slika, vrsta);
     }
-	
-	/*svi_signali(){
-		var tablica = "<table> <tr><td>Postrojenje</td><td>Napon</td><td>Dio postrojenja</td><td>Uređaj</td><td>Varijabla</td><td>Stanje</td></tr>";
-		
-		var uvod = "<td>TS-J</td><td>220</td><td>DV-J</td><td>rastavljač</td>";
-		
-		for (var kljuc in this.varijable) {
-			var count = this.varijable[kljuc].length;
-			for(var i = 0; i < count; i++) {
-				if (kljuc == "stanje") {
-					tablica += "<tr>" + uvod + "<td>" + kljuc +"</td><td>" + this.varijable[kljuc][i] +"</td></tr>";
-				}
-			}
-		}
-		tablica = tablica + "</table><br>";
-		return tablica;
-	}*/
 }
 
 class zastita{
@@ -212,9 +168,9 @@ class zastita_zatajenje extends zastita{
 	}
 }
 
-class prekidac extends elementpostrojenja {
+class prekidač extends elementpostrojenja {
 	constructor(ime, komanda, stanje, gubitakSF6_upoz, gubitakN2_blok, mintlak_blok, gubitakSF6_blok, gubitakulja_blok, APU_blok, kvar_grijanja, slika, vrsta){
-        super(ime);
+        super(ime, vrsta);
 		this.komanda = komanda;
 		this.stanje = stanje;
 		this.gubitakSF6_upoz = gubitakSF6_upoz;
@@ -226,44 +182,8 @@ class prekidac extends elementpostrojenja {
 		this.kvar_grijanja = kvar_grijanja;
 		this.slika = slika;
 		this.varijable = {komanda: ["uklop", "isklop"], stanje: ["međupoložaj", "uključen", "isključen", "kvar signalizacije"], gubitakSF6_upoz: ["prorada", "prestanak"], gubitakN2_blok: ["prorada", "prestanak"], mintlak_blok: ["prorada", "prestanak"], gubitakSF6_blok: ["prorada", "prestanak"], gubitakulja_blok: ["prorada", "prestanak"], APU_blok: ["prorada", "prestanak"], kvar_grijanja: ["prorada", "prestanak"]};
-		this.vrsta = vrsta;
 		document.getElementById(this.slika).src = "Slike/prekidac_ukljucen.png";
 	}
-	
-	to_string2(){
-		var tablica = "<table> <tr><td>Postrojenje</td><td>Napon</td><td>Dio postrojenja</td><td>Uređaj</td><td>Varijabla</td><td>Stanje</td></tr>";
-		
-		var uvod = "<td>TS-J</td><td>220</td><td>DV-J</td><td>prekidač</td>";
-		
-		for (var property in this) {
-			if (this.hasOwnProperty(property) && property != "slika") {
-				tablica += "<tr>" + uvod + "<td>" + property+"</td><td>" + this[property]+"</td></tr>";
-			}
-		}
-		tablica = tablica + "</table><br>";
-		return tablica;
-	}
-	
-	svi_signali(){
-		var tablica = "<table> <tr><td>Postrojenje</td><td>Napon</td><td>Dio postrojenja</td><td>Uređaj</td><td>Varijabla</td><td>Stanje</td></tr>";
-		
-		var uvod = "<td>TS-J</td><td>220</td><td>DV-J</td><td>prekidač</td>";
-		
-		for (var kljuc in this.varijable) {
-			var count = this.varijable[kljuc].length;
-			for(var i = 0; i < count; i++) {
-				tablica += "<tr>" + uvod + "<td>" + kljuc +"</td><td>" + this.varijable[kljuc][i] +"</td></tr>";
-			}
-		}
-		tablica = tablica + "</table><br>";
-		return tablica;
-	}
-	
-	prikazi_stanje(){
-		console.log("desno-kliknut sam");
-		document.getElementById("elem_stat").innerHTML = this.to_string();
-		document.getElementById("elem_stat").style.visibility = "visible";
-	}	
 }
 
 class polje {
@@ -275,10 +195,10 @@ class polje {
 class dalekovodno_polje extends polje{
 	constructor() {
         super();
-		this.p1 = new prekidac("Prekidač 1", "uklop", "uključen", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "pdal1", "prekidac");
-		this.r1 = new rastavljac("Rastavljač 1", "isključen", "rdal1", "rastavljac");
-		this.r2 = new rastavljac("Rastavljač 2", "uključen", "rdal2", "rastavljac");
-		this.r3 = new rastavljac("Rastavljač 3", "uključen", "rdal3", "rastavljac");
+		this.p1 = new prekidač("Prekidač 1", "uklop", "uključen", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "pdal1", "prekidač");
+		this.r1 = new rastavljač("Rastavljač 1", "isključen", "rdal1", "rastavljač");
+		this.r2 = new rastavljač("Rastavljač 2", "uključen", "rdal2", "rastavljač");
+		this.r3 = new rastavljač("Rastavljač 3", "uključen", "rdal3", "rastavljač");
 		this.mjerni_pretvornik1 = new mjerni_pretvornik("Mjerni pretvornik", 0, 0);
 		this.brojilo1 = new brojilo("Brojilo 1", 0, "prestanak");
 		this.APU1 = new APU("APU 1", "prestanak", "prestanak", "prestanak");
@@ -288,11 +208,11 @@ class dalekovodno_polje extends polje{
 	}
 	
 	smije_se_gasiti(predmet_promjene){
-        return (predmet_promjene.vrsta == "prekidac") || (this.p1.stanje == "isključen");
+        return (predmet_promjene.vrsta == "prekidač") || (this.p1.stanje == "isključen");
 	}
 	
 	smije_se_paliti(predmet_promjene){
-		if ((predmet_promjene.vrsta == "prekidac") || (this.p1.stanje == "isključen" && this.r1.stanje == "isključen" && this.r2.stanje == "isključen"))
+		if ((predmet_promjene.vrsta == "prekidač") || (this.p1.stanje == "isključen" && this.r1.stanje == "isključen" && this.r2.stanje == "isključen"))
 			return 1;
         return (predmet_promjene == this.r3 && this.p1.stanje == "isključen");
 	}
@@ -303,7 +223,7 @@ class dalekovodno_polje extends polje{
 		if (predmet_promjene.stanje == "uključen") {
 			if (this.smije_se_gasiti(predmet_promjene)){
 				predmet_promjene.stanje = "isključen";
-				if (predmet_promjene.vrsta == "prekidac") {
+				if (predmet_promjene.vrsta == "prekidač") {
 					predmet_promjene.komanda = "isklop";
 					document.getElementById(predmet_promjene.slika).src = "Slike/prekidac_iskljucen.png";
 				} else {
@@ -317,7 +237,7 @@ class dalekovodno_polje extends polje{
 		} else {
 			if (this.smije_se_paliti(predmet_promjene)){
 				predmet_promjene.stanje = "uključen";
-				if (predmet_promjene.vrsta == "prekidac") {
+				if (predmet_promjene.vrsta == "prekidač") {
 					predmet_promjene.komanda = "uklop"; 
 					document.getElementById(predmet_promjene.slika).src = "Slike/prekidac_ukljucen.png";
 				} else {
@@ -335,17 +255,17 @@ class dalekovodno_polje extends polje{
 class spojno_polje extends polje{
 	constructor() {
         super();
-		this.p2 = new prekidac("Prekidač 2", "uklop", "uključen", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "psp1", "prekidac");
-		this.r4 = new rastavljac_linijski("Rastavljač 4", "isključen", "uklop", "rsp1", "rastavljac");
-		this.r5 = new rastavljac_uzemljenja("Rastavljač 5", "uključen", "rsp2", "rastavljac");
+		this.p2 = new prekidač("Prekidač 2", "uklop", "uključen", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "psp1", "prekidač");
+		this.r4 = new rastavljac_linijski("Rastavljač 4", "isključen", "uklop", "rsp1", "rastavljač");
+		this.r5 = new rastavljac_uzemljenja("Rastavljač 5", "uključen", "rsp2", "rastavljač");
 	}
     
 	smije_se_gasiti(predmet_promjene){
-        return (predmet_promjene.vrsta == "prekidac") || (this.p2.stanje != "uključen");
+        return (predmet_promjene.vrsta == "prekidač") || (this.p2.stanje != "uključen");
 	}
 	
 	smije_se_paliti(predmet_promjene){
-        return (predmet_promjene.vrsta == "prekidac") || (this.p2.stanje == "isključen" && this.r4.stanje == "isključen" && this.r5.stanje == "isključen");
+        return (predmet_promjene.vrsta == "prekidač") || (this.p2.stanje == "isključen" && this.r4.stanje == "isključen" && this.r5.stanje == "isključen");
 	}
 	
 	promijeni_stanje(predmet_promjene){
@@ -354,7 +274,7 @@ class spojno_polje extends polje{
 		if (predmet_promjene.stanje == "uključen") {
 			if (this.smije_se_gasiti(predmet_promjene)){
 				predmet_promjene.stanje = "isključen";
-				if (predmet_promjene.vrsta == "prekidac") {
+				if (predmet_promjene.vrsta == "prekidač") {
 					predmet_promjene.komanda = "isklop";
 					document.getElementById(predmet_promjene.slika).src = "Slike/prekidac_iskljucen.png";
 				} else {
@@ -368,7 +288,7 @@ class spojno_polje extends polje{
 		} else {
 			if (this.smije_se_paliti(predmet_promjene)){
 				predmet_promjene.stanje = "uključen";
-				if (predmet_promjene.vrsta == "prekidac") {
+				if (predmet_promjene.vrsta == "prekidač") {
 					predmet_promjene.komanda = "uklop"; 
 					document.getElementById(predmet_promjene.slika).src = "Slike/prekidac_ukljucen.png";
 				} else {
