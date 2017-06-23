@@ -18,34 +18,25 @@ class elementpostrojenja {
         return str;
 	}
     
-    tren(p){
-		var tablica = "<table> <tr><td>Postrojenje</td><td>Napon</td><td>Dio postrojenja</td><td>Uređaj</td><td>Varijabla</td><td>Stanje</td></tr>";
-		
-		var uvod = "<td>TS-J</td><td>"+p.napon+"</td><td>"+p.vrsta+"</td><td>" + this.vrsta + "</td>";
-		
-        tablica += "<tr>" + uvod + "<td>ime</td><td>" + this.ime+"</td></tr>";
-		for (var property in this.varijable) {
-            tablica += "<tr>" + uvod + "<td>" + property.replace(/_/g , " ").trim() + "</td><td>" + this[property]+"</td></tr>";
-		}
-		tablica = tablica + "</table><br>";
-		return tablica;
-	}
-    
-    svi_signali(p){
-		var tablica = "<table> <tr><td>Postrojenje</td><td>Napon</td><td>Dio postrojenja</td><td>Uređaj</td><td>Varijabla</td><td>Stanje</td></tr>";
+    ispis_signala(p, koliko) {
+        var tablica = "<table> <tr><td>Postrojenje</td><td>Napon</td><td>Dio postrojenja</td><td>Uređaj</td><td>Varijabla</td><td>Stanje</td></tr>";
 		
 		var uvod = "<td>TS-J</td><td>"+p.napon+"</td><td>"+p.vrsta+"</td><td>" + this.vrsta + "</td>";
 		
         tablica += "<tr>" + uvod + "<td>ime</td><td>" + this.ime +"</td></tr>";
 		for (var kljuc in this.varijable) {
-			var count = this.varijable[kljuc].length;
-			for(var i = 0; i < count; i++) {
-				tablica += "<tr>" + uvod + "<td>" + kljuc.replace(/_/g , " ").trim() +"</td><td>" + this.varijable[kljuc][i] +"</td></tr>";
-			}
+			if (koliko == "svi_signali") {
+                var count = this.varijable[kljuc].length;
+                for(var i = 0; i < count; i++) {
+                    tablica += "<tr>" + uvod + "<td>" + kljuc.replace(/_/g , " ").trim() +"</td><td>" + this.varijable[kljuc][i] +"</td></tr>";
+                }
+            } else {
+                tablica += "<tr>" + uvod + "<td>" + kljuc.replace(/_/g , " ").trim() +"</td><td>" + this[kljuc] +"</td></tr>";
+            }
 		}
 		tablica = tablica + "</table><br>";
 		return tablica;
-	}
+    }
     
 	prikazi_stanje(){
 		document.getElementById("elem_stat").innerHTML = this.to_string();
@@ -112,14 +103,12 @@ class rastavljač_uzemljenja extends rastavljač{
 class zaštita extends elementpostrojenja {
 	constructor(ime, vrsta){
         super(ime, vrsta);
-		this.ime = ime;
 	}
 }
 
 class distantna_zaštita extends zaštita{
 	constructor(ime, isklj, lone_pot, ltwo_pot, lthree_pot, zemljospoj_pot, stagetwo_pot, stagethree_pot, tkprijem, tkslanje, osjetljiva_zs){
         super(ime, "distantna zaštita");
-		this.ime = ime;
 		this.isključenje = isklj;
 		this.faza_L1_poticaj = lone_pot;
 		this.faza_L2_poticaj = ltwo_pot;
@@ -137,7 +126,6 @@ class distantna_zaštita extends zaštita{
 class nadstrujna_zaštita extends zaštita{
 	constructor(ime, isklj){
         super(ime, "nadstrujna zaštita");
-		this.ime = ime;
 		this.isključenje = isklj;
 		this.varijable = {isključenje: ["prorada", "prestanak"]};
 	}
@@ -146,7 +134,6 @@ class nadstrujna_zaštita extends zaštita{
 class zaštita_zatajenje extends zaštita{
 	constructor(ime, prvistup_isklj, drugistup_isklj, rastavljač_kvar, pomocnonap_off, u_testu){
         super(ime, "zaštita zatajenje");
-		this.ime = ime;
 		this._1_stupanj_isključenje = prvistup_isklj;
 		this._2_stupanj_isključenje = drugistup_isklj;
 		this.rastavljač_kvar = rastavljač_kvar;
@@ -182,7 +169,7 @@ class polje {
         var lista = "<html><head><title>"+koliko+" "+this.vrsta+"</title><meta charset=\"UTF-8\"></head><body>";
         for (var obj in this) {
             if (this[obj] instanceof elementpostrojenja) {
-                lista += this[obj][koliko](this);
+                lista += this[obj].ispis_signala(this, koliko);
             }
         }
         lista += "</body></html>";
