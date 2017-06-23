@@ -120,17 +120,17 @@ class distantna_zaštita extends zaštita{
 	constructor(ime, isklj, lone_pot, ltwo_pot, lthree_pot, zemljospoj_pot, stagetwo_pot, stagethree_pot, tkprijem, tkslanje, osjetljiva_zs){
         super(ime, "distantna zaštita");
 		this.ime = ime;
-		this.isklj = isklj;
-		this.lone_pot = lone_pot;
-		this.ltwo_pot = ltwo_pot;
-		this.lthree_pot = lthree_pot;
+		this.isključenje = isklj;
+		this.faza_L1_poticaj = lone_pot;
+		this.faza_L2_poticaj = ltwo_pot;
+		this.faza_L3_poticaj = lthree_pot;
 		this.zemljospoj_pot = zemljospoj_pot;
-		this.stagetwo_pot = stagetwo_pot;
-		this.stagethree_pot = stagethree_pot;
-		this.tkprijem = tkprijem;
-		this.tkslanje = tkslanje;
-		this.osjetljiva_zs = osjetljiva_zs;
-		this.varijable = {isključenje: ["prorada", "prestanak"], faza_L1_poticaj: ["prorada", "prestanak"], faza_L2_poticaj: ["prorada", "prestanak"], faza_L3_poticaj: ["prorada", "prestanak"], zemljospoj_poticaj: ["prorada", "prestanak"], _2_stupanj_poticaj: ["prorada", "prestanak"], _3_stupanj_poticaj: ["prorada", "prestanak"], TK_prijem_signala: ["prorada", "prestanak"], osjetljiva_zemljospojna: ["prorada", "prestanak"]};
+		this._2_stupanj_poticaj = stagetwo_pot;
+		this._3_stupanj_poticaj = stagethree_pot;
+		this.TK_prijem_signala = tkprijem;
+		this.TK_slanje_signala = tkslanje;
+		this.osjetljiva_zemljospojna = osjetljiva_zs;
+		this.varijable = {isključenje: ["prorada", "prestanak"], faza_L1_poticaj: ["prorada", "prestanak"], faza_L2_poticaj: ["prorada", "prestanak"], faza_L3_poticaj: ["prorada", "prestanak"], zemljospoj_poticaj: ["prorada", "prestanak"], _2_stupanj_poticaj: ["prorada", "prestanak"], _3_stupanj_poticaj: ["prorada", "prestanak"], TK_prijem_signala: ["prorada", "prestanak"], TK_slanje_signala: ["prorada", "prestanak"], osjetljiva_zemljospojna: ["prorada", "prestanak"]};
 	}
 }
 
@@ -138,20 +138,20 @@ class nadstrujna_zaštita extends zaštita{
 	constructor(ime, isklj){
         super(ime, "nadstrujna zaštita");
 		this.ime = ime;
-		this.isklj = isklj;
+		this.isključenje = isklj;
 		this.varijable = {isključenje: ["prorada", "prestanak"]};
 	}
 }
 
 class zaštita_zatajenje extends zaštita{
-	constructor(ime, prvistup_isklj, drugistup_isklj, rastavljač_kvar, pomocnonap_off, test){
+	constructor(ime, prvistup_isklj, drugistup_isklj, rastavljač_kvar, pomocnonap_off, u_testu){
         super(ime, "zaštita zatajenje");
 		this.ime = ime;
-		this.prvistup_isklj = prvistup_isklj;
-		this.drugistup_isklj = drugistup_isklj;
+		this._1_stupanj_isključenje = prvistup_isklj;
+		this._2_stupanj_isključenje = drugistup_isklj;
 		this.rastavljač_kvar = rastavljač_kvar;
-		this.pomocnonap_off = pomocnonap_off;
-		this.test = test;
+		this.pomoćno_napajanje_nestanak = pomocnonap_off;
+		this.u_testu = u_testu;
 		this.varijable = {_1_stupanj_isključenje: ["prorada", "prestanak"], _2_stupanj_isključenje: ["prorada", "prestanak"], rastavljač_kvar: ["prorada", "prestanak"], pomoćno_napajanje_nestanak: ["prorada", "prestanak"], u_testu: ["prorada", "prestanak"]};
 	}
 }
@@ -188,6 +188,14 @@ class polje {
         lista += "</body></html>";
         var opened = window.open("");
         opened.document.write(lista);
+    }
+    
+    provjeraZastite(zastita) {
+        for (var key in zastita.varijable) {
+            if (zastita[key] == "prorada")
+                return 1;
+        }
+        return 0;
     }
     
     smije_se_gasiti(predmet_promjene){
@@ -289,6 +297,13 @@ class dalekovodno_polje extends polje{
 	}
     
     ugasi_polje() {
+        if (this.provjeraZastite(this.zaštita_dist) ||
+            this.provjeraZastite(this.zaštita_nadstr) ||
+            this.provjeraZastite(this.zaštita_od_zatajenja)) {
+            err_visible("Zaštita je u proradi i ne može se ugasiti polje", 5);
+            return;
+        }
+        
         var fje = [0,0,0,0,1];
         var arg = [this.p1, this.r1, this.r2, this.r3, this.r6];
         
@@ -306,6 +321,13 @@ class dalekovodno_polje extends polje{
     }
     
     upali_polje() {
+        if (this.provjeraZastite(this.zaštita_dist) ||
+            this.provjeraZastite(this.zaštita_nadstr) ||
+            this.provjeraZastite(this.zaštita_od_zatajenja)) {
+            err_visible("Zaštita je u proradi i ne može se ugasiti polje", 5);
+            return;
+        }
+        
         var fje = [0,1,1,1];
         var arg = [this.r6, this.r1, this.r3, this.p1];
         
