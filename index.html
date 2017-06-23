@@ -25,9 +25,17 @@
 		sessionStorage.setItem("sent", spojno_lista); 
 		window.open("listaSveDVPolje.html","_blank");
 	}
+	function pali_gasi_polje(tren_polje, tren_btn){
+		if (tren_polje.stanje == "ukljuceno") {
+			tren_polje.stanje = "iskljuceno";
+			document.getElementById(tren_btn).style.backgroundColor = "#f00";
+		} else {
+			tren_polje.stanje = "ukljuceno";
+			document.getElementById(tren_btn).style.backgroundColor = "#0f0";
+		}
+	}
 	</script>
 	<style>
-	
 	</style>
 </head>
 
@@ -41,7 +49,7 @@
                 <div class="dropdown-content">
                     <a href="#" onclick="lista_sve_dp()">Svi signali</a>
                     <a href="#" onclick="lista_tren_dp()">Trenutni signali</a>
-                    <center><button type="button" class="btn">Uključi/Isključi</button></center>
+                    <center><button type="button" class="btn" id="btn1" style="background-color: #0f0;" onclick='pali_gasi_polje(dvp, "btn1")'>Uključi/Isključi</button></center>
                 </div>
             </li>
             <li class="dropdown">
@@ -49,7 +57,7 @@
                 <div class="dropdown-content">
                     <a href="#" onclick="lista_sve_sp()">Svi signali</a>
                     <a href="#" onclick="lista_tren_sp()">Trenutni signali</a>
-                    <center><button type="button" class="btn">Uključi/Isključi</button></center>
+                    <center><button type="button" class="btn" id="btn2"  style="background-color: #f00;"  onclick='pali_gasi_polje(spp, "btn2")'>Uključi/Isključi</button></center>
                 </div>
             </li>
         </ul>
@@ -89,6 +97,17 @@
 	<div id="error_log" class="err" style="visibility: hidden;">
     </div>
 	<script src="klase.js"></script>
+	<script>
+	function pali_gasi_polje(tren_polje, tren_btn){
+		if (tren_polje.stanje == "ukljuceno") {
+			tren_polje.stanje = "iskljuceno";
+		document.getElementById(tren_btn).style.background-color = "#f00";
+		} else {
+			tren_polje.stanje = "ukljuceno";
+		document.getElementById(tren_btn).style.background-color = "#0f0";
+		}
+	}
+	</script>
 </body>
 
 </html>
