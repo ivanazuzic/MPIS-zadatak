@@ -43,26 +43,28 @@
 </head>
 
 <body>
-	<ul>
-		<li><a href="">About</a></li>
-		<li><a href="">Help</a></li>
-		<li class="dropdown">
-			<a href="javascript:void(0)" class="dropbtn">Dalekovodno polje</a>
-			<div class="dropdown-content">
-				<a href="#" onclick="lista_sve_dp()">Svi signali</a>
-				<a href="#" onclick="lista_tren_dp()">Trenutni signali</a>
-				<center><button type="button" class="btn">Uključi/Isključi</button></center>
-			</div>
-		</li>
-		<li class="dropdown">
-			<a href="javascript:void(0)" class="dropbtn">Spojno polje</a>
-			<div class="dropdown-content">
-				<a href="#" onclick="lista_sve_sp()">Svi signali</a>
-				<a href="#" onclick="lista_tren_sp()">Trenutni signali</a>
-				<center><button type="button" class="btn">Uključi/Isključi</button></center>
-			</div>
-		</li>
-	</ul>
+    <div id="navbar">
+        <ul>
+            <li><a href="">About</a></li>
+            <li><a href="">Help</a></li>
+            <li class="dropdown">
+                <a href="javascript:void(0)" class="dropbtn">Dalekovodno polje</a>
+                <div class="dropdown-content">
+                    <a href="#" onclick="lista_sve_dp()">Svi signali</a>
+                    <a href="#" onclick="lista_tren_dp()">Trenutni signali</a>
+                    <center><button type="button" class="btn">Uključi/Isključi</button></center>
+                </div>
+            </li>
+            <li class="dropdown">
+                <a href="javascript:void(0)" class="dropbtn">Spojno polje</a>
+                <div class="dropdown-content">
+                    <a href="#" onclick="lista_sve_sp()">Svi signali</a>
+                    <a href="#" onclick="lista_tren_sp()">Trenutni signali</a>
+                    <center><button type="button" class="btn">Uključi/Isključi</button></center>
+                </div>
+            </li>
+        </ul>
+    </div>
 	<!--Ovo su primjeri kako se koriste klase i funkcije.-->
 	<p id="demo"></p>
 	<p id="demo2"></p>
