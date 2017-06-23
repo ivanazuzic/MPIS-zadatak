@@ -198,6 +198,17 @@ class polje {
         return 0;
     }
     
+    rekur(p, fje, arg, i) {
+        setTimeout(function() {
+            if (fje[i] == 0)
+                p.ugasiElem(arg[i]);
+            else 
+                p.upaliElem(arg[i]);
+            ++i
+            if (i < fje.length) p.rekur(p, fje, arg, i);
+        }, i*200);
+    }
+    
     smije_se_gasiti(predmet_promjene){
 	}
 	
@@ -313,20 +324,7 @@ class dalekovodno_polje extends polje{
             return;
         }
         
-        var fje = [0,0,0,0,1];
-        var arg = [this.p1, this.r1, this.r2, this.r3, this.r6];
-        
-        var i = 0;
-        (function rekur(p) {
-            setTimeout(function() {
-                if (fje[i] == 0)
-                    p.ugasiElem(arg[i]);
-                else 
-                    p.upaliElem(arg[i]);
-                ++i;
-                if (i < fje.length) rekur(p);
-            }, i*200);
-        })(this)
+        this.rekur(this, [0,0,0,0,1], [this.p1, this.r1, this.r2, this.r3, this.r6], 0);
     }
     
     upali_polje() {
@@ -341,21 +339,8 @@ class dalekovodno_polje extends polje{
             err_visible("Prekidač ne radi te se ne može upaliti polje", 5);
             return;
         }
-        
-        var fje = [0,1,1,1];
-        var arg = [this.r6, this.r1, this.r3, this.p1];
-        
-        var i = 0;
-        (function rekur(p) {
-            setTimeout(function() {
-                if (fje[i] == 0)
-                    p.ugasiElem(arg[i]);
-                else 
-                    p.upaliElem(arg[i]);
-                ++i;
-                if (i < fje.length) rekur(p);
-            }, i*200);
-        })(this)
+
+        this.rekur(this, [0,1,1,1], [this.r6, this.r1, this.r3, this.p1], 0);
     }
 }
 
