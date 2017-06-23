@@ -231,11 +231,14 @@ class polje {
         if (this.stanje == "uključeno") {
             this.stanje = "isključeno";
             document.getElementById(tren_btn).style.backgroundColor = "#0f0";
+            document.getElementById(tren_btn).style.color = "black";
             document.getElementById(tren_btn).innerHTML = "Uključi";
+            
             this.ugasi_polje();
         } else {
             this.stanje = "uključeno";
             document.getElementById(tren_btn).style.backgroundColor = "#f00";
+            document.getElementById(tren_btn).style.color = "white";
             document.getElementById(tren_btn).innerHTML = "Isključi";
             this.upali_polje();
         }
