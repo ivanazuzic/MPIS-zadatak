@@ -14,14 +14,16 @@ class elementpostrojenja {
 
 
 class mjerni_pretvornik{
-	constructor(r_snaga, napon) {
+	constructor(ime, r_snaga, napon) {
+		this.ime = ime;
 		radna_snaga = r_snaga;
 		napon = napon; 
 	}
 }
 
 class brojilo{
-	constructor(r_energija, alarm) {
+	constructor(ime, r_energija, alarm) {
+		this.ime = ime;
 		this.radna_energija = r_energija;
 		this.alarm = alarm;
 		this.varijable = {alarm: ["prorada", "prestanak"]};
@@ -249,10 +251,16 @@ class polje {
 class dalekovodno_polje extends polje{
 	constructor() {
         super();
-		this.p1 = new prekidac("P1", "uklop", "uključen", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "pdal1", "prekidac");
-		this.r1 = new rastavljac("R1", "isključen", "rdal1", "rastavljac");
-		this.r2 = new rastavljac("R2", "uključen", "rdal2", "rastavljac");
-		this.r3 = new rastavljac("R3", "uključen", "rdal3", "rastavljac");
+		this.p1 = new prekidac("Prekidač 1", "uklop", "uključen", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "pdal1", "prekidac");
+		this.r1 = new rastavljac("Rastavljač 1", "isključen", "rdal1", "rastavljac");
+		this.r2 = new rastavljac("Rastavljač 2", "uključen", "rdal2", "rastavljac");
+		this.r3 = new rastavljac("Rastavljač 3", "uključen", "rdal3", "rastavljac");
+		this.mjerni_pretvornik1 = new mjerni_pretvornik("Mjerni pretvornik", 0, 0);
+		this.brojilo1 = new brojilo("Brojilo 1", 0, "prestanak");
+		this.APU1 = new APU("APU 1", "prestanak", "prestanak", "prestanak");
+		this.zastita_nadstr = new nadstrujna_zastita("Zaštita nadstrujna 1", "prestanak");
+		this.zastita_dist = new distantna_zastita("Zaštita distantna 1", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak");
+		this.zastita_od_zatajenja = new zastita_zatajenje("Zaštita od zatajenja prekidača 1", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak");
 	}
 	
 	smije_se_gasiti(predmet_promjene){

@@ -5,17 +5,6 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<link rel="stylesheet" type="text/css" href="elementipostrojenja.css">
 	<script>	
-	function sample(){
-		var dalekovodno_lista = p1.to_string2() + r1.to_string2() + r2.to_string2() + r3.to_string2();
-		var spojno_lista = p2.to_string2() + r4.to_string2() + r5.to_string2();
-
-		//the sessionStorage.setItem(); is the predefined function in javascript
-		//which will support for every browser that will store the sessions.
-		sessionStorage.setItem("sent", dalekovodno_lista + spojno_lista); 
-
-		//this is to open a window in new tab
-		window.open("listaSveDVPolje.html","_blank");
-	}
 	function lista_tren_dp(){
 		var dalekovodno_lista = dvp.p1.to_string2() + dvp.r1.to_string2() + dvp.r2.to_string2() + dvp.r3.to_string2();
 		sessionStorage.setItem("sent", dalekovodno_lista); 
