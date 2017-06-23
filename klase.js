@@ -209,11 +209,8 @@ class polje {
         }, i*200);
     }
     
-    smije_se_gasiti(predmet_promjene){
-	}
-	
-	smije_se_paliti(predmet_promjene){
-	}
+    smije_se_gasiti(predmet_promjene){}
+	smije_se_paliti(predmet_promjene){}
     
     ugasiElem(el) {
         if (this.smije_se_gasiti(el)) {
@@ -357,7 +354,7 @@ class spojno_polje extends polje{
 	}
 	
 	smije_se_paliti(predmet_promjene){
-        return (predmet_promjene.vrsta == "prekidač") || (this.p2.stanje == "isključen" /*&& this.r4.stanje == "isključen" && this.r5.stanje == "isključen"*/);
+        return (predmet_promjene.vrsta == "prekidač") || (this.p2.stanje == "isključen");
 	}
     
     ugasi_polje() {
