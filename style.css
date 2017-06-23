@@ -74,3 +74,22 @@ li.dropdown {
 .dropdown:hover .dropdown-content {
     display: block;
 }
+
+#popup{
+    margin: 20px auto;
+    padding: 20px;
+    background-color: rgba(32, 32, 32, 0.9);
+    color: #EEE;
+    position: relative;
+    font-family: Helvetica;
+    word-wrap: break-word;
+    width: 38%;
+    visibility: hidden;
+    border-radius: 15px;
+    box-shadow: 0px 0px 20px #333;
+    z-index: 50;
+}
+
+.alright {
+    text-align: center;
+}

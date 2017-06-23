@@ -12,9 +12,8 @@
 <body>
     <div id="navbar">
         <ul>
-			<li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="help.html">Help</a></li>
+            <li><a href="#" onclick="toggleVisible('about');">About</a></li>
+            <li><a href="#" onclick="toggleVisible('help');">Help</a></li>
             <li class="dropdown">
                 <a href="javascript:void(0)" class="dropbtn">Dalekovodno polje</a>
                 <div class="dropdown-content">
@@ -70,6 +69,7 @@
 	</div>
 	<div id="error_log" class="err" style="visibility: hidden;">
     </div>
+    <div id="popup"></div>
     <script src="generic.js"></script>
 	<script src="klase.js"></script>
 </body>

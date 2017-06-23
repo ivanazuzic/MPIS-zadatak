@@ -7,34 +7,40 @@
 	width: 500px;
 }	
 #sabirnica_naslov1 {
+    z-index: 5;
 	position: relative;
 	top: 251px;
 	left: 15px;
 }
 #sabirnnica_naslov2 {
+    z-index: 5;
 	position: relative;
 	top: 263px;
 	left: 15px;
 }
 #pdal1 {
+    z-index: 5;
 	float: left;
 	position: relative;
 	top: 350px;
 	left: 120px;
 }
 #rdal1 {
+    z-index: 5;
 	float: left;
 	position: relative;
 	top: 275px;
 	left: 35px;
 }
 #rdal2 {
+    z-index: 5;
 	float: left;
 	position: relative;
 	top: 275px;
 	left: 55px;
 }
 #rdal3 {
+    z-index: 5;
 	float: left;
 	position: relative;
 	top: 410px;
@@ -42,6 +48,7 @@
 }
 
 #rdal6 {
+    z-index: 5;
     float: left;
 	position: relative;
 	top: 455px;
@@ -51,18 +58,21 @@
 
 /*spojno polje*/
 #psp1 {
+    z-index: 5;
 	float: left;
 	position: relative;
 	top: 325px;
 	left: 120px;
 }
 #rsp1 {
+    z-index: 5;
 	float: left;
 	position: relative;
 	top: 270px;
 	left: 35px;
 }
 #rsp2 {
+    z-index: 5;
 	float: left;
 	position: relative;
 	top: 270px;
