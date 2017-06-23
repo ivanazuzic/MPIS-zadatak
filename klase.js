@@ -254,9 +254,10 @@ class dalekovodno_polje extends polje{
 	constructor(vrsta, stanje, napon) {
         super(vrsta, stanje, napon);
 		this.p1 = new prekidač("Prekidač 1", "uklop", "uključen", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "pdal1", "prekidač");
-		this.r1 = new rastavljač("Rastavljač 1", "isključen", "rdal1", "rastavljač");
-		this.r2 = new rastavljač("Rastavljač 2", "uključen", "rdal2", "rastavljač");
-		this.r3 = new rastavljač("Rastavljač 3", "uključen", "rdal3", "rastavljač");
+		this.r1 = new rastavljač_sabirnicki("Rastavljač 1", "isključen", "rdal1", "rastavljač");
+		this.r2 = new rastavljač_sabirnicki("Rastavljač 2", "uključen", "rdal2", "rastavljač");
+		this.r3 = new rastavljač_linijski("Rastavljač 3", "uključen", "rdal3", "rastavljač");
+		this.r6 = new rastavljač_uzemljenja("Rastavljač 6", "uključen", "rdal6", "rastavljač");
 		this.mjerni_pretvornik1 = new mjerni_pretvornik("Mjerni pretvornik", 0, 0);
 		this.brojilo1 = new brojilo("Brojilo 1", 0, "prestanak");
 		this.APU1 = new APU("APU 1", "prestanak", "prestanak", "prestanak");
@@ -281,7 +282,7 @@ class spojno_polje extends polje{
         super(vrsta, stanje, napon);
 		this.p2 = new prekidač("Prekidač 2", "uklop", "uključen", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "psp1", "prekidač");
 		this.r4 = new rastavljač_linijski("Rastavljač 4", "isključen", "uklop", "rsp1", "rastavljač");
-		this.r5 = new rastavljač_uzemljenja("Rastavljač 5", "uključen", "rsp2", "rastavljač");
+		this.r5 = new rastavljač_sabirnicki("Rastavljač 5", "uključen", "rsp2", "rastavljač");
 	}
     
 	smije_se_gasiti(predmet_promjene){
