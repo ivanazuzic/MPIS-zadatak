@@ -177,6 +177,8 @@ class polje {
         opened.document.write(lista);
     }
     
+    poljeUključeno() {}
+    
     provjeraZastite(zastita) {
         for (var key in zastita.varijable) {
             if (zastita.varijable[key][0] == "prorada" && zastita[key] == "prorada")
@@ -191,7 +193,8 @@ class polje {
                 p.ugasiElem(arg[i]);
             else 
                 p.upaliElem(arg[i]);
-            ++i
+            ++i;
+            p.poljeUključeno();
             if (i < fje.length) p.rekur(p, fje, arg, i);
         }, i*200);
     }
@@ -222,21 +225,29 @@ class polje {
     ugasi_polje(){}
     upali_polje(){}
     
+    ugasiBotun(btn){
+        this.stanje = "isključeno";
+        document.getElementById(btn).style.backgroundColor = "#0f0";
+        document.getElementById(btn).style.color = "black";
+        document.getElementById(btn).innerHTML = "Uključi";
+    }
+    
+    upaliBotun(btn){
+        this.stanje = "uključeno";
+        document.getElementById(btn).style.backgroundColor = "#f00";
+        document.getElementById(btn).style.color = "white";
+        document.getElementById(btn).innerHTML = "Isključi";
+    }
+    
     pali_gasi_polje(tren_btn){
         if (this.stanje == "uključeno") {
-            this.stanje = "isključeno";
-            document.getElementById(tren_btn).style.backgroundColor = "#0f0";
-            document.getElementById(tren_btn).style.color = "black";
-            document.getElementById(tren_btn).innerHTML = "Uključi";
-            
+            this.ugasiBotun(tren_btn);
             this.ugasi_polje();
         } else {
-            this.stanje = "uključeno";
-            document.getElementById(tren_btn).style.backgroundColor = "#f00";
-            document.getElementById(tren_btn).style.color = "white";
-            document.getElementById(tren_btn).innerHTML = "Isključi";
+            this.upaliBotun(tren_btn);
             this.upali_polje();
         }
+        this.poljeUključeno();
     }
     
     promijeni_stanje(predmet_promjene){
@@ -263,6 +274,7 @@ class polje {
                 return 1; // nešto ne valja
 			}
 		}
+        this.poljeUključeno();
         return 0; // sve 5
 	}
 }
@@ -283,7 +295,20 @@ class dalekovodno_polje extends polje{
 		this.zaštita_od_zatajenja = new zaštita_zatajenje("Zaštita od zatajenja prekidača 1", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak");
 	}
 	
+    poljeUključeno() {
+        if ((this.r1.stanje == "uključen" || this.r2.stanje == "uključen") && this.p1.stanje == "uključen" && this.r3.stanje == "uključen") {
+            document.getElementById("stanjeDV").style.backgroundColor = "#0f0";
+            this.upaliBotun("btn1");
+        } else if (this.r6.stanje == "uključen") {
+            document.getElementById("stanjeDV").style.backgroundColor = "#f00";
+            this.ugasiBotun("btn1");
+        } else {
+            document.getElementById("stanjeDV").style.backgroundColor = "#ff0";
+        }
+    }
+    
 	smije_se_gasiti(predmet_promjene){
+        console.log(predmet_promjene, "gašenje");
         if (predmet_promjene.slika == "rdal6") {
             return this.p1.stanje == "isključen" && this.r1.stanje == "isključen" && this.r2.stanje == "isključen" && this.r3.stanje == "isključen";
         }
@@ -291,6 +316,7 @@ class dalekovodno_polje extends polje{
 	}
 	
 	smije_se_paliti(predmet_promjene){
+        console.log(predmet_promjene, "paljenje");
         if (predmet_promjene.slika == "rdal6") {
             return this.p1.stanje == "isključen" && this.r1.stanje == "isključen" && this.r2.stanje == "isključen" && this.r3.stanje == "isključen";
         }
@@ -338,6 +364,18 @@ class spojno_polje extends polje{
 		this.r4 = new rastavljač_sabirnički("Sabirnički rastavljač 3", "rastavljač", "uključen", "uklop", "rsp1");
 		this.r5 = new rastavljač_sabirnički("Sabirnički rastavljač 4", "rastavljač", "uključen", "uklop", "rsp2");
 	}
+    
+    poljeUključeno() {
+        if (this.p2.stanje == "uključen" && this.r4.stanje == "uključen" && this.r5.stanje == "uključen") {
+            document.getElementById("stanjeSV").style.backgroundColor = "#0f0";
+            this.upaliBotun("btn2");
+        } else if (this.p2.stanje == "isključen") {
+            document.getElementById("stanjeSV").style.backgroundColor = "#f00";
+            this.ugasiBotun("btn2");
+        } else {
+            document.getElementById("stanjeSV").style.backgroundColor = "#ff0";
+        }
+    }
     
 	smije_se_gasiti(predmet_promjene){
         return (predmet_promjene.vrsta == "prekidač") || (this.p2.stanje != "uključen");

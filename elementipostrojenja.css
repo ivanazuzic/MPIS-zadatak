@@ -86,6 +86,29 @@
 	left: -130px;
 }
 
+.stanjeDV, .stanjeSV {
+    float: left;
+	position: absolute;
+	top: 160px;
+}
+
+.stanjeSV {top: 190px;}
+
+#stanjeDV, #stanjeSV {
+    padding: 5px;
+    border-radius: 5px;
+    float: left;
+	position: absolute;
+	top: 164px;
+    left: 205px;
+    background-color: #0f0;
+}
+
+#stanjeSV {
+    background-color: #f00;
+    top: 194px;
+}
+
 .status {
 	position: absolute;
     padding: 5px;
