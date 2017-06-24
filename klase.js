@@ -1,5 +1,5 @@
 class elementpostrojenja {
-	constructor(ime, vrsta, stanje, slika) {
+    constructor(ime, vrsta, stanje, slika) {
         this.ime = ime;
         this.vrsta = vrsta;
 		this.varijable = {};
@@ -83,6 +83,7 @@ class rastavljač_linijski extends rastavljač{
         super(ime, vrsta, stanje, slika);
         this.varijable.komanda =  ["uklop", "isklop"];
 		this.komanda = komanda;
+        document.getElementById(this.slika).title = this.to_string().replace(/<br>/g, "\n");
 	}	
 }
 
@@ -91,12 +92,14 @@ class rastavljač_sabirnički extends rastavljač{
         super(ime, vrsta, stanje, slika);
         this.varijable.komanda =  ["uklop", "isklop"];
 		this.komanda = komanda;
+        document.getElementById(this.slika).title = this.to_string().replace(/<br>/g, "\n");
 	}	
 }
 
 class rastavljač_uzemljenja extends rastavljač{
 	constructor(ime, vrsta, stanje, slika){
         super(ime, vrsta, stanje, slika);
+        document.getElementById(this.slika).title = this.to_string().replace(/<br>/g, "\n");
     }
 }
 
@@ -155,6 +158,7 @@ class prekidač extends elementpostrojenja {
 		this.APU_blok = APU_blok;
 		this.kvar_grijanja = kvar_grijanja;
 		this.varijable = {stanje: ["međupoložaj", "uključen", "isključen", "kvar signalizacije"], komanda: ["uklop", "isklop"], gubitakSF6_upoz: ["prorada", "prestanak"], gubitakN2_blok: ["prorada", "prestanak"], mintlak_blok: ["prorada", "prestanak"], gubitakSF6_blok: ["prorada", "prestanak"], gubitakulja_blok: ["prorada", "prestanak"], APU_blok: ["prorada", "prestanak"], kvar_grijanja: ["prorada", "prestanak"]};
+        document.getElementById(this.slika).title = this.to_string().replace(/<br>/g, "\n");
 	}
 }
 
@@ -274,6 +278,7 @@ class polje {
                 return 1; // nešto ne valja
 			}
 		}
+        document.getElementById(predmet_promjene.slika).title = predmet_promjene.to_string().replace(/<br>/g, "\n");
         this.poljeUključeno();
         return 0; // sve 5
 	}
