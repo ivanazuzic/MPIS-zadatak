@@ -214,6 +214,7 @@ class polje {
             }
             document.getElementById(el.slika).src = "Slike/"+el.vrsta+"_"+el.stanje+".png";
         }
+        document.getElementById(el.slika).title = el.to_string().replace(/<br>/g, "\n");
     }
     
     upaliElem(el) {
@@ -224,6 +225,7 @@ class polje {
             }
             document.getElementById(el.slika).src = "Slike/"+el.vrsta+"_"+el.stanje+".png";
         }
+        document.getElementById(el.slika).title = el.to_string().replace(/<br>/g, "\n");
     }
     
     ugasi_polje(){}
