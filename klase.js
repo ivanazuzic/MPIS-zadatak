@@ -300,7 +300,7 @@ class dalekovodno_polje extends polje{
 		this.zaštita_nadstr = new nadstrujna_zaštita("Zaštita nadstrujna 1", "prestanak");
 		this.zaštita_dist = new distantna_zaštita("Zaštita distantna 1", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak");
 		this.zaštita_od_zatajenja = new zaštita_zatajenje("Zaštita od zatajenja prekidača 1", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak");
-        document.getElementById("naponDV").innerHTML = this.napon + " V";
+        document.getElementById("naponDV").innerHTML = this.napon + " kV";
 	}
 	
     poljeUključeno() {
@@ -371,7 +371,7 @@ class spojno_polje extends polje{
 		this.p2 = new prekidač("Prekidač 2", "prekidač", "isključen", "isklop", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "prestanak", "psp1");
 		this.r4 = new rastavljač_sabirnički("Sabirnički rastavljač 3", "rastavljač", "uključen", "uklop", "rsp1");
 		this.r5 = new rastavljač_sabirnički("Sabirnički rastavljač 4", "rastavljač", "uključen", "uklop", "rsp2");
-        document.getElementById("naponSV").innerHTML = this.napon + " V";
+        document.getElementById("naponSV").innerHTML = this.napon + " kV";
 	}
     
     poljeUključeno() {
